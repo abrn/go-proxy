@@ -1,0 +1,25 @@
+# the host and port to run the proxy from
+client:
+  host: "localhost"
+  port: 2050
+
+# the server ip and port to target
+server:
+  host: "54.235.235.140"
+  port: 2050
+
+# the incoming and outgoing rc4 keys
+keys:
+  incoming: "c91d9eec420160730d825604e0"
+  outgoing: "5a4d2016bc16dc64883194ffd9"
+
+log:
+  # log trace messages
+  trace: True
+  # log debug messages
+  debug: True
+  packets:
+    # log all incoming packets
+    incoming: False
+    # log all outgoing packets
+    outgoing: False
