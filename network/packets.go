@@ -12,7 +12,6 @@ type Packet struct {
 	Data   []byte
 }
 
-
 func (p *Packet) Advance(amount int) int {
 	p.Index += amount
 	return amount
@@ -24,7 +23,7 @@ func (p *Packet) ReadString() string {
 		return ""
 	}
 	var str []byte
-	str = p.Data[p.Index:p.Index+n]
+	str = p.Data[p.Index : p.Index+n]
 	p.Advance(n)
 	return string(str)
 }
@@ -47,7 +46,7 @@ func (p *Packet) ReadUTFString() string {
 		return ""
 	}
 	var str []byte
-	str = p.Data[p.Index:p.Index+n]
+	str = p.Data[p.Index : p.Index+n]
 	p.Advance(n)
 	return string(str)
 }
@@ -93,7 +92,7 @@ func (p *Packet) WriteFloat(f float32) {
 
 // ReadInt16 - read a 16bit integer
 func (p *Packet) ReadInt16() int16 {
-	return int16(binary.BigEndian.Uint16(p.Data[p.Index:p.Index+p.Advance(2)]))
+	return int16(binary.BigEndian.Uint16(p.Data[p.Index : p.Index+p.Advance(2)]))
 }
 
 // WriteInt16 - write an unsigned 16bit int
@@ -103,7 +102,7 @@ func (p *Packet) WriteInt16(i int16) {
 
 // ReadUInt16 - read an unsigned 16bit int
 func (p *Packet) ReadUInt16() uint16 {
-	return binary.BigEndian.Uint16(p.Data[p.Index:p.Index+p.Advance(2)])
+	return binary.BigEndian.Uint16(p.Data[p.Index : p.Index+p.Advance(2)])
 }
 
 // WriteUInt16 - write an unsigned 16bit int
@@ -113,7 +112,7 @@ func (p *Packet) WriteUInt16(i uint16) {
 
 // ReadInt32 - read a 32bit integer
 func (p *Packet) ReadInt32() int32 {
-	i := int32(binary.BigEndian.Uint32(p.Data[p.Index:p.Index+4]))
+	i := int32(binary.BigEndian.Uint32(p.Data[p.Index : p.Index+4]))
 	p.Advance(4)
 	return i
 }
@@ -125,7 +124,7 @@ func (p *Packet) WriteInt32(i int32) {
 
 // ReadUInt32 - read an unsigned 32bit int
 func (p *Packet) ReadUInt32() uint32 {
-	i := binary.BigEndian.Uint32(p.Data[p.Index:p.Index+4])
+	i := binary.BigEndian.Uint32(p.Data[p.Index : p.Index+4])
 	p.Advance(4)
 	return i
 }
@@ -137,7 +136,7 @@ func (p *Packet) WriteUInt32(i uint32) {
 
 // ReadByte - read a single byte from the buffer
 func (p *Packet) ReadByte() byte {
-	b := p.Data[p.Index:p.Index+1][0]
+	b := p.Data[p.Index : p.Index+1][0]
 	p.Advance(1)
 	return b
 }
@@ -150,7 +149,7 @@ func (p *Packet) WriteByte(b byte) {
 
 // ReadBytes - read a certain amount of bytes
 func (p *Packet) ReadBytes(amount int) []byte {
-	return p.Data[p.Index:p.Index+p.Advance(amount)]
+	return p.Data[p.Index : p.Index+p.Advance(amount)]
 }
 
 // ReadCompressed - read a compressed integer from the buffer
@@ -158,14 +157,14 @@ func (p *Packet) ReadCompressed() int32 {
 	var value uint32 = 0
 	data := uint32(p.ReadByte())
 	negative := true
-	if data & 64 == 0 {
+	if data&64 == 0 {
 		negative = false
 	}
 	var mask uint32 = 6
 	value = uint32(data) & 63
-	for data & 128 > 0 {
+	for data&128 > 0 {
 		data = uint32(p.ReadByte())
-		value = value | (data & 127) << mask
+		value = value | (data&127)<<mask
 		mask = mask + 7
 	}
 	if negative == true {

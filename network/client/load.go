@@ -5,8 +5,8 @@ import (
 )
 
 type LoadPacket struct {
-	CharID		int32
-	FromArena	bool
+	CharID    int32
+	FromArena bool
 }
 
 func (l *LoadPacket) Read(p *network.Packet) {

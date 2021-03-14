@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"proxy/syscall"
 )
+
 var (
-	Proxy 		ProxyServer
-	Settings 	Config
+	Proxy    ProxyServer
+	Settings Config
 )
 
 func main() {

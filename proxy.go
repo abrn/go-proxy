@@ -6,15 +6,15 @@ import (
 )
 
 type ProxyServer struct {
-	sentBytes     	uint64
-	recdBytes 		uint64
-	laddr, raddr  	*net.TCPAddr
-	lconn, rconn  	io.ReadWriteCloser
-	erred         	bool
-	errsig        	chan bool
+	sentBytes    uint64
+	recdBytes    uint64
+	laddr, raddr *net.TCPAddr
+	lconn, rconn io.ReadWriteCloser
+	erred        bool
+	errsig       chan bool
 
-	Log      	  	Logger
-	OutputHex     	bool
+	Log       Logger
+	OutputHex bool
 }
 
 // NewProxy - create a new proxy interface with config options
@@ -28,13 +28,13 @@ func NewProxy(lconn *net.TCPConn, laddr, raddr *net.TCPAddr) *ProxyServer {
 	}
 	logger.Info("Proxy server started")
 	return &ProxyServer{
-		lconn: lconn,
-		laddr: laddr,
-		raddr: raddr,
-		erred: false,
+		lconn:  lconn,
+		laddr:  laddr,
+		raddr:  raddr,
+		erred:  false,
 		errsig: make(chan bool),
 		// todo: implement config vars here
-		Log: logger,
+		Log:       logger,
 		OutputHex: false,
 	}
 }

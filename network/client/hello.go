@@ -3,19 +3,19 @@ package client
 import "proxy/network"
 
 type HelloPacket struct {
-	BuildVersion 		string
-	GameId 				int32
-	AccessToken			string
-	KeyTime 			uint32
-	Key 				[]byte
-	MapJSON	 			string
-	EntryTag			string
-	GameNet 			string
-	GameNetUserID 		string
-	PlayPlatform 		string
-	PlatformToken 		string
-	UserToken 			string
-	ClientToken 		string
+	BuildVersion  string
+	GameId        int32
+	AccessToken   string
+	KeyTime       uint32
+	Key           []byte
+	MapJSON       string
+	EntryTag      string
+	GameNet       string
+	GameNetUserID string
+	PlayPlatform  string
+	PlatformToken string
+	UserToken     string
+	ClientToken   string
 }
 
 func (h *HelloPacket) Read(p *network.Packet) {
