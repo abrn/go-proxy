@@ -23,6 +23,32 @@ func GetPetUpdateType(command byte) string {
 	}
 }
 
+// Currency - used in most purchase based packets
+
+type CurrencyType byte
+
+const (
+	CurrencyGold          CurrencyType = 0
+	CurrencyFame          CurrencyType = 1
+	CurrencyGuildFame     CurrencyType = 2
+	CurrencyFortuneTokens CurrencyType = 3
+)
+
+func GetCurrencyType(currency byte) string {
+	switch currency {
+	case 0:
+		return "Gold"
+	case 1:
+		return "Fame"
+	case 2:
+		return "Guild Fame"
+	case 3:
+		return "Fortune Tokens"
+	default:
+		return "Unknown: " + string(currency)
+	}
+}
+
 // BuyResultPacket
 
 type BuyResultCode int32

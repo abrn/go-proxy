@@ -3,7 +3,7 @@ package client
 import "proxy/network"
 
 type ChangeTradePacket struct {
-	MyOffers 	[]bool
+	MyOffers []bool
 }
 
 func (c *ChangeTradePacket) Read(p *network.Packet) {
