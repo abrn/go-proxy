@@ -49,15 +49,9 @@ func GrabRegistryData() {
 	winHeight := make(chan uint32)
 	winWidth := make(chan uint32)
 
-	server, err := getLastServer()
-	height
-	go func() {
-		height, err := getWinHeight()
-		if err != nil {
-			lastError <- err
-		}
-		winHeight <- height
-	}()
+	server, err := GetLastServer()
+	height, err := GetWindowHeight()
+	width, err := GetWindowWidth()
 
 	select {
 	case lastErr := <- err:
@@ -70,9 +64,9 @@ func GrabRegistryData() {
 	}
 }
 
-func getLastServer() (string, error) {
+func GetLastServer() (chan string, chan error) {
 	keyName := "preferredServer_h3991771845"
-	resChan := make(chan uint32)
+	resChan := make(chan string)
 	errChan := make(chan error)
 	go func() {
 
@@ -88,7 +82,7 @@ func getLastServer() (string, error) {
 	return string(bin), err
 }
 
-func getWinHeight() (chan uint32, chan error) {
+func GetWindowHeight() (chan uint32, chan error) {
 	resChan := make(chan uint32)
 	errChan := make(chan error)
 	go func() {
@@ -101,7 +95,7 @@ func getWinHeight() (chan uint32, chan error) {
 	return resChan, errChan
 }
 
-func getWinWidth() (chan uint32, chan error) {
+func GetWindowWidth() (chan uint32, chan error) {
 	resChan := make(chan uint32)
 	errChan := make(chan error)
 	go func() {
@@ -114,6 +108,20 @@ func getWinWidth() (chan uint32, chan error) {
 	return resChan, errChan
 }
 
+func GetExaltGUID() (string, error) {
+	keyName := "guid_h2087642266"
+	key, err := gowin32.OpenRegKey(RegRootKey, RegSubKey, false)
+	if err != nil {
+		return "", err
+	}
+	bin, err := key.GetValueBinary(keyName)
+	if err != nil {
+		return "", err
+	}
+	return string(bin), err
+}
+
+// getSubKeys - grab every key name under the exalt root key
 func getSubKeys() (chan []string, chan error) {
 	resChan := make(chan []string)
 	errChan := make(chan error)
@@ -127,24 +135,37 @@ func getSubKeys() (chan []string, chan error) {
 				errChan <- err
 			}
 			RegKeys = keys
-			for i := 0; i < len(keys); i++ {
-				k := keys[i]
-				switch true {
-				case strings.HasPrefix(k, "screenHeight"):
-
-				}
-			}
+			resChan <- keys
 		}
 	}()
 	return resChan, errChan
 }
 
+// parseSubKeys - parse every exalt registry key name and grab only the ones we need
 func parseSubKeys(keys []string) {
+	for i := 0; i < len(keys); i++ {
+		k := keys[i]
+		switch true {
+		case strings.HasPrefix(k ,"preferredServer"):
+			server, err := grabSubKeyStr(k)
+		case strings.HasPrefix(k, "screenHeight"):
+			height, err := grabSubKeyInt(k)
+		case strings.HasPrefix(k, "screeWidth"):
+			width, err := grabSubKeyStr(k)
+		case strings.HasPrefix(k, "guid"):
+			guid, err := grabSubKeyStr(k)
+		}
+	}
 
 }
 
-func GetExaltGUID() (string, error) {
-	keyName := "guid_h2087642266"
+// grabSubKeyInt - grab a single integer subkey value from the exalt registry root
+func grabSubKeyInt(keyName string) (uint32, error) {
+
+}
+
+// grabSubKeyStr - grab a single string subkey (binary first) value from the exalt registry root
+func grabSubKeyStr(keyName string) (string, error) {
 	key, err := gowin32.OpenRegKey(RegRootKey, RegSubKey, false)
 	if err != nil {
 		return "", err
@@ -180,17 +201,17 @@ func GetProcPIDs() (int, error) {
 
 // KillCrashHandle - check if the UnityCrashHandler proc is running and try kill it
 func KillCrashHandle() (bool, error) {
-	if CrashPID == 0 {
+	if Processes.CrashPID == 0 {
 		return false, errors.New("crash handler not running (no PID)")
 	}
 	// todo: implement some fallbacks for errors
-	running, err := gowin32.IsProcessRunning(CrashPID)
+	running, err := gowin32.IsProcessRunning(Processes.CrashPID)
 	if err != nil {
 		return false, err
 	} else if !running {
 		return false, errors.New("crash handler not running (PID)")
 	}
-	killed := gowin32.KillProcess(CrashPID, 0)
+	killed := gowin32.KillProcess(Processes.CrashPID, 0)
 	if killed != nil {
 		return false, killed
 	}
