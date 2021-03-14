@@ -8,10 +8,10 @@ type ChangeTradePacket struct {
 
 func (c *ChangeTradePacket) Read(p *network.Packet) {
 	count := p.ReadInt16()
-	c.MyOffers = make([]bool, count)
 	if count <= 0 {
 		return
 	}
+	c.MyOffers = make([]bool, count)
 	for i := 0; i < int(count); i++ {
 		c.MyOffers[i] = p.ReadBool()
 	}

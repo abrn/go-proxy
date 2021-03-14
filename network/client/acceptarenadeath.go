@@ -2,7 +2,7 @@ package client
 
 import "proxy/network"
 
-type AcceptArenaDeathPacket struct {}
+type AcceptArenaDeathPacket struct{}
 
 func (c *AcceptArenaDeathPacket) Read(p *network.Packet) {}
 

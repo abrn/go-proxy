@@ -6,8 +6,8 @@ import (
 )
 
 type GameConnection struct {
-	Connected 		bool
-	Destroyed		bool
-	Handler 		net.Conn
-	Socket 			*bufio.ReadWriter
+	Connected bool
+	Destroyed bool
+	Handler   net.Conn
+	Socket    *bufio.ReadWriter
 }

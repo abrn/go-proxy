@@ -14,8 +14,8 @@ type TradeStartPacket struct {
 
 func (t *TradeStartPacket) Read(p *network.Packet) {
 	myCount := p.ReadInt16()
-	t.MyItems = make([]data.TradeItem, myCount)
 	if myCount > 0 {
+		t.MyItems = make([]data.TradeItem, myCount)
 		for i := 0; i < int(myCount); i++ {
 			t.MyItems[i] = data.TradeItem{}
 			t.MyItems[i].Read(p)
@@ -23,8 +23,8 @@ func (t *TradeStartPacket) Read(p *network.Packet) {
 	}
 	t.OtherName = p.ReadString()
 	otherCount := p.ReadInt16()
-	t.OtherItems = make([]data.TradeItem, otherCount)
 	if otherCount > 0 {
+		t.OtherItems = make([]data.TradeItem, otherCount)
 		for i := 0; i < int(otherCount); i++ {
 			t.OtherItems[i] = data.TradeItem{}
 			t.OtherItems[i].Read(p)

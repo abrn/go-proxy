@@ -8,10 +8,10 @@ type ForgeUnlockedBlueprintsPacket struct {
 
 func (f *ForgeUnlockedBlueprintsPacket) Read(p *network.Packet) {
 	count := p.ReadByte()
-	f.Blueprints = make([]int32, count)
 	if count <= 0 {
 		return
 	}
+	f.Blueprints = make([]int32, count)
 	for i := 0; i < int(count); i++ {
 		f.Blueprints[i] = p.ReadCompressed()
 	}

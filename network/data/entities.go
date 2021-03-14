@@ -31,10 +31,10 @@ func (o *ObjectStatusData) Read(p *network.Packet) {
 	o.Position = WorldPosData{}
 	o.Position.Read(p)
 	statCount := p.ReadCompressed()
-	o.Stats = make([]StatData, statCount)
 	if statCount <= 0 {
 		return
 	}
+	o.Stats = make([]StatData, statCount)
 	for i := 0; i < int(statCount); i++ {
 		o.Stats[i] = StatData{}
 		o.Stats[i].Read(p)

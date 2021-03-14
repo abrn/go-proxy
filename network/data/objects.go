@@ -64,15 +64,15 @@ func (q *QuestData) Read(p *network.Packet) {
 	q.Expiration = p.ReadString()
 	q.Category = p.ReadInt32()
 	reqs := p.ReadInt16()
-	q.Requirements = make([]int32, reqs)
 	if reqs > 0 {
+		q.Requirements = make([]int32, reqs)
 		for i := 0; i < int(reqs); i++ {
 			q.Requirements[i] = p.ReadInt32()
 		}
 	}
 	rewards := p.ReadInt16()
-	q.Rewards = make([]int32, rewards)
 	if rewards > 0 {
+		q.Rewards = make([]int32, rewards)
 		for i := 0; i < int(rewards); i++ {
 			q.Rewards[i] = p.ReadInt32()
 		}
