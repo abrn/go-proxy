@@ -48,4 +48,34 @@ func (v *VaultContentPacket) Read(p *network.Packet) {
 	v.NextPotionCount = p.ReadInt16()
 }
 
-// todo: VAULTCONTENT add write function
+func (v VaultContentPacket) Write(p *network.Packet) {
+	p.WriteBool(v.Unknown)
+	p.WriteCompressed(v.VaultObjectID)
+	p.WriteCompressed(v.GiftObjectID)
+	p.WriteCompressed(v.PotionObjectID)
+	vaultCount := len(v.VaultContent)
+	p.WriteCompressed(int32(vaultCount))
+	if vaultCount > 0 {
+		for i := 0; i < vaultCount; i++ {
+			p.WriteCompressed(v.VaultContent[i])
+		}
+	}
+	giftCount := len(v.GiftContent)
+	p.WriteCompressed(int32(giftCount))
+	if giftCount > 0 {
+		for i := 0; i < giftCount; i++ {
+			p.WriteCompressed(v.GiftContent[i])
+		}
+	}
+	potionCount := len(v.PotionContent)
+	p.WriteCompressed(int32(potionCount))
+	if potionCount > 0 {
+		for i := 0; i < potionCount; i++ {
+			p.WriteCompressed(v.PotionContent[i])
+		}
+	}
+	p.WriteInt16(v.VaultUpgradeCost)
+	p.WriteInt16(v.PotionUpgradeCost)
+	p.WriteInt16(v.MaxPotionCount)
+	p.WriteInt16(v.NextPotionCount)
+}

@@ -33,4 +33,17 @@ func (m *MapInfoPacket) Read(p *network.Packet) {
 	m.OpenedTime = p.ReadUInt32()
 }
 
-// todo: MAPINFO add write function
+func (m MapInfoPacket) Write(p *network.Packet) {
+	p.WriteInt32(m.Width)
+	p.WriteInt32(m.Height)
+	p.WriteString(m.Name)
+	p.WriteString(m.DisplayName)
+	p.WriteString(m.RealmName)
+	p.WriteInt32(m.Difficulty)
+	p.WriteUInt32(m.FP)
+	p.WriteInt32(m.Background)
+	p.WriteBool(m.AllowTP)
+	p.WriteBool(m.ShowDisplay)
+	p.WriteInt16(m.MaxPlayers)
+	p.WriteUInt32(m.OpenedTime)
+}
