@@ -10,39 +10,39 @@ import (
 )
 
 const (
-	RegRootKey 			gowin32.RegRoot = wrappers.HKEY_CURRENT_USER
-	RegSubKey			string = "Software\\DECA Live Operations GmbH\\RotMGExalt"
+	RegRootKey gowin32.RegRoot = wrappers.HKEY_CURRENT_USER
+	RegSubKey  string          = "Software\\DECA Live Operations GmbH\\RotMGExalt"
 
-	FileNameLauncher 	string = "RotMG Exalt Launcher.exe"
-	FileNameGame 		string = "RotMG Exalt.exe"
-	FileNameCrash 		string = "UnityCrashHandler64.exe"
+	FileNameLauncher string = "RotMG Exalt Launcher.exe"
+	FileNameGame     string = "RotMG Exalt.exe"
+	FileNameCrash    string = "UnityCrashHandler64.exe"
 )
 
 var (
-	LauncherRunning		bool = false
-	GameRunning 		bool = false
-	CrashHandleRunning	bool = false
+	LauncherRunning    bool = false
+	GameRunning        bool = false
+	CrashHandleRunning bool = false
 
-	Processes 			ProcHandles
-	RegData 			RegistryData
-	RegKeys 			[]string
+	Processes ProcHandles
+	RegData   RegistryData
+	RegKeys   []string
 )
 
 type ProcHandles struct {
-	LauncherPID 		uint
-	LauncherHandle		syscall.Handle
-	GamePID 			uint
-	GameHandle 			syscall.Handle
-	CrashPID 			uint
+	LauncherPID    uint
+	LauncherHandle syscall.Handle
+	GamePID        uint
+	GameHandle     syscall.Handle
+	CrashPID       uint
 }
 
 type RegistryData struct {
-	LastServer 			string
-	BestServer 			string
-	GUID 				string
-	WinHeight 			uint32
-	WinWidth 			uint32
-	FullScreen 			bool
+	LastServer string
+	BestServer string
+	GUID       string
+	WinHeight  uint32
+	WinWidth   uint32
+	FullScreen bool
 }
 
 func GrabRegistryData() {
@@ -54,13 +54,13 @@ func GrabRegistryData() {
 	width, err := GetWindowWidth()
 
 	select {
-	case lastErr := <- err:
+	case lastErr := <-err:
 		fmt.Printf("Error getting registry key: %s\n", lastErr.Error())
-		case LastServer := <- server:
+	case LastServer := <-server:
 
-		case height := <- winHeight:
-			WinHeight = height
-			fmt.Printf("Updated game window height: %d\n", height)
+	case height := <-winHeight:
+		WinHeight = height
+		fmt.Printf("Updated game window height: %d\n", height)
 	}
 }
 
@@ -146,7 +146,7 @@ func parseSubKeys(keys []string) {
 	for i := 0; i < len(keys); i++ {
 		k := keys[i]
 		switch true {
-		case strings.HasPrefix(k ,"preferredServer"):
+		case strings.HasPrefix(k, "preferredServer"):
 			server, err := grabSubKeyStr(k)
 		case strings.HasPrefix(k, "screenHeight"):
 			height, err := grabSubKeyInt(k)

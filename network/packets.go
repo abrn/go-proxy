@@ -8,7 +8,8 @@ import (
 type Packet struct {
 	Index  int
 	Length uint
-	ID     int
+	Block  bool
+	ID     byte
 	Data   []byte
 }
 

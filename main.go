@@ -2,66 +2,94 @@ package main
 
 import (
 	"fmt"
-	"proxy/syscall"
+	"net"
+	"os"
+	"strconv"
 )
 
 var (
-	Proxy    ProxyServer
-	Settings Config
+	Proxy    *ProxyServer
+	Settings *Config
+	Logger   *ColorLogger
 )
 
+// main - start of the program / load settings and start goroutines
 func main() {
 	Settings = GetConfig()
-	startProxy()
-	startSysHooks()
-	startRegWatcher()
+	Logger = createLogger(Settings)
+	startProxy(Settings)
+	//go startSysHooks()
+	go startRegWatcher()
 }
 
-func startProxy() {
+// startProxy -
+func startProxy(conf *Config) {
+	Logger.Info("Starting proxy!\n")
+	loc := conf.Client.Host + ":" + strconv.Itoa(conf.Client.Port)
+	rem := conf.Target.Host + ":" + strconv.Itoa(conf.Target.Port)
 
+	// resolve local host and port
+	local, err := net.ResolveTCPAddr("tcp", loc)
+	fmt.Printf("Trying to resolve local address\n")
+	if err != nil {
+		Logger.Error("failed to resolve local address %s - %s", loc, err)
+		os.Exit(1)
+	}
+	fmt.Printf("Resolved local address\n")
+	// resolve the target server
+	remote, err := net.ResolveTCPAddr("tcp", rem)
+	if err != nil {
+		Logger.Error("failed to resolve RotMG server: %s", err)
+		os.Exit(1)
+	}
+	fmt.Printf("Resolved remote address\n")
+	// try to create a local listener
+	listener, err := net.ListenTCP("tcp", local)
+	if err != nil {
+		Logger.Error("could not bind to localhost on port %d: %s", conf.Client.Port, err)
+		os.Exit(1)
+	}
+	Logger.Debug("Created listener\n")
+	// loop awaiting a client connection
+	for {
+		conn, err := listener.AcceptTCP()
+		if err != nil {
+			Logger.Error("failed to accept connection from client: %s", err.Error())
+			continue
+		}
+		Proxy = NewProxy(conn, local, remote, conf)
+		go Proxy.Start()
+	}
+}
+
+func createLogger(conf *Config) *ColorLogger {
+	debug := conf.Log.Debug
+	trace := conf.Log.Trace
+
+	return &ColorLogger{
+		VeryVerbose: trace,
+		Verbose:     debug,
+		Color:       false,
+	}
 }
 
 func startRegWatcher() {
-	// testing
-	scrWidth, err := syscall.GetWinHeight()
-	if err != nil {
-		fmt.Printf("Failed to find screen height value: %s\n", err.Error())
-	} else {
-		fmt.Printf("Found Exalt screen height value: %d\n", scrWidth)
-	}
-	scrHeight, err := syscall.GetWinWidth()
-	if err != nil {
-		fmt.Printf("Failed to find screen width value: %s\n", err.Error())
-	} else {
-		fmt.Printf("Found Exalt screen width value: %d\n", scrHeight)
-	}
-	guid, err := syscall.GetExaltGUID()
-	if err != nil {
-		fmt.Printf("Failed to find screen width value: %s\n", err.Error())
-	} else {
-		fmt.Printf("Found Exalt GUID: %s\n", guid)
-	}
-	serv, err := syscall.GetLastServer()
-	if err != nil {
-		fmt.Printf("Failed to find last server: %s\n", err.Error())
-	} else {
-		fmt.Printf("Found Exalt last server: %s\n\n", serv)
-	}
+
 }
 
-func startSysHooks() {
-	_, err := syscall.GetProcPIDs()
-	if err != nil {
-		fmt.Printf("Error getting processes: %s\n", err.Error())
-		// todo: make a loop here on failure
-		return
-	}
-	killed, err := syscall.KillCrashHandle()
-	if err != nil {
-		fmt.Printf("Error killing crash handler: %s\n", err.Error())
-	} else if !killed {
-		fmt.Printf("Failed to kill crash handler: %v\n", killed)
-	} else {
-		fmt.Println("Killed Unity crash handler successfully")
-	}
-}
+//func startSysHooks() {
+//	_, errored := syscall.GetProcPIDs()
+//	if errored != nil {
+//		fmt.Printf("Error getting processes: %s\n", errored.Error())
+//		// todo: make a loop here on failure
+//		return
+//	}
+//	killed, errored := syscall.KillCrashHandle()
+//	if errored != nil {
+//		fmt.Printf("Error killing crash handler: %s\n", errored.Error())
+//	} else if !killed {
+//		fmt.Printf("Failed to kill crash handler: %v\n", killed)
+//	} else {
+//		fmt.Println("Killed Unity crash handler successfully")
+//	}
+//}

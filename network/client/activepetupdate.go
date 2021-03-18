@@ -5,8 +5,8 @@ import (
 )
 
 type ActivePetUpdatePacket struct {
-	CommandType 	byte
-	InstanceID 		int32
+	CommandType byte
+	InstanceID  int32
 }
 
 func (a *ActivePetUpdatePacket) Read(p *network.Packet) {

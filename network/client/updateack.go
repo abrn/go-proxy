@@ -2,7 +2,7 @@ package client
 
 import "proxy/network"
 
-type UpdateAckPacket struct {}
+type UpdateAckPacket struct{}
 
 func (c *UpdateAckPacket) Read(p *network.Packet) {}
 

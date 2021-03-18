@@ -1,0 +1,13 @@
+syntax = "proto3";
+package resources;
+option go_package = "resources";
+import "google/protobuf/timestamp.proto";
+
+message ServerCache {
+  google.protobuf.Timestamp timestamp = 1;
+  message Server {
+    string name = 1;
+    string hostname = 2;
+  }
+  repeated Server servers = 2;
+}

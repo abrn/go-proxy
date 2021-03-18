@@ -6,10 +6,10 @@ import (
 )
 
 type TradeStartPacket struct {
-	MyItems 	[]data.TradeItem
-	OtherName 	string // the trade partner username
-	OtherItems 	[]data.TradeItem
-	ObjectID 	int32 // the clients object ID
+	MyItems    []data.TradeItem
+	OtherName  string // the trade partner username
+	OtherItems []data.TradeItem
+	ObjectID   int32 // the clients object ID
 }
 
 func (t *TradeStartPacket) Read(p *network.Packet) {

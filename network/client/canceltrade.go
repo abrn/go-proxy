@@ -2,7 +2,7 @@ package client
 
 import "proxy/network"
 
-type CancelTradePacket struct {}
+type CancelTradePacket struct{}
 
 func (c *CancelTradePacket) Read(p *network.Packet) {}
 

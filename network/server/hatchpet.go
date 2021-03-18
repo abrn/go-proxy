@@ -3,9 +3,9 @@ package server
 import "proxy/network"
 
 type HatchPetPacket struct {
-	PetName 	string
-	PetType 	int32
-	ItemType 	int32
+	PetName  string
+	PetType  int32
+	ItemType int32
 }
 
 func (h *HatchPetPacket) Read(p *network.Packet) {

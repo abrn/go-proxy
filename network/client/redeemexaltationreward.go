@@ -3,7 +3,7 @@ package client
 import "proxy/network"
 
 // todo: REDEEMEXALTATIONREWARD test this
-type RedeemExaltationRewardPacket struct {}
+type RedeemExaltationRewardPacket struct{}
 
 func (r *RedeemExaltationRewardPacket) Read(p *network.Packet) {}
 

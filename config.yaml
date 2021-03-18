@@ -1,9 +1,15 @@
-# the host and port to run the proxy from
+account:
+  email: ""
+  pass: ""
+  # leave this empty if you don't know what you're doing
+  clientToken: ""
+
+# the host and port to run the proxy from, don't change this
 client:
   host: "localhost"
   port: 2050
 
-# the server ip and port to target
+# the initial server to join
 server:
   host: "54.235.235.140"
   port: 2050
@@ -14,12 +20,10 @@ keys:
   outgoing: "5a4d2016bc16dc64883194ffd9"
 
 log:
-  # log trace messages
   trace: True
-  # log debug messages
   debug: True
+  # use hex when printing packet bytes
+  useHex: True
   packets:
-    # log all incoming packets
     incoming: False
-    # log all outgoing packets
     outgoing: False

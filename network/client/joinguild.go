@@ -3,7 +3,7 @@ package client
 import "proxy/network"
 
 type JoinGuildPacket struct {
-	Name 	string
+	Name string
 }
 
 func (j *JoinGuildPacket) Read(p *network.Packet) {

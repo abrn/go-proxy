@@ -4,7 +4,7 @@ import "proxy/network"
 
 type NewTickPacket struct {
 	TickID           int32
-	TickTime         int32	// last client tick time
+	TickTime         int32  // last client tick time
 	ServerRealTimeMS uint32 // last server tick time in milliseconds
 	ServerLastRTTMS  uint16 // last server packet round-trip time in milliseconds
 }

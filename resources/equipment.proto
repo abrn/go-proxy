@@ -1,0 +1,4 @@
+syntax = "proto3";
+package resources;
+option go_package = "github.com/abrn/go-proxy/resources";
+

@@ -2,7 +2,7 @@ package client
 
 import "proxy/network"
 
-type CheckCreditsPacket struct {}
+type CheckCreditsPacket struct{}
 
 func (c *CheckCreditsPacket) Read(p *network.Packet) {}
 
