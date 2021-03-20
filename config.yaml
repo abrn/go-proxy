@@ -1,9 +1,3 @@
-account:
-  email: ""
-  pass: ""
-  # leave this empty if you don't know what you're doing
-  clientToken: ""
-
 # the host and port to run the proxy from, don't change this
 client:
   host: "localhost"
@@ -13,6 +7,9 @@ client:
 server:
   host: "54.235.235.140"
   port: 2050
+
+# leave this empty if you don't know what you're doing
+clientToken: ""
 
 # the incoming and outgoing rc4 keys
 keys:
