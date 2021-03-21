@@ -2,8 +2,14 @@ package client
 
 import "proxy/network"
 
-type ResetDailyQuestsPacket struct{}
+type ResetDailyQuestsPacket struct {
+	Unknown int32
+}
 
-func (c *ResetDailyQuestsPacket) Read(p *network.Packet) {}
+func (r *ResetDailyQuestsPacket) Read(p *network.Packet) {
+	r.Unknown = p.ReadInt32()
+}
 
-func (c ResetDailyQuestsPacket) Write(p *network.Packet) {}
+func (r ResetDailyQuestsPacket) Write(p *network.Packet) {
+	p.WriteInt32(r.Unknown)
+}

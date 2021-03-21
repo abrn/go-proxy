@@ -1,5 +1,7 @@
 package network
 
+import "proxy/network/client"
+
 // ActivePetUpdatePacket
 
 type ActivePetUpdateCommand byte
@@ -37,7 +39,7 @@ const (
 	BuyRankTooLow     BuyResultCode = 5
 	BuyNotEnoughFame  BuyResultCode = 6
 	BuyPetFeedSuccess BuyResultCode = 7
-	BuyUnknown2		  BuyResultCode = 10 // haven't seen this error but it's in game code
+	BuyUnknown2       BuyResultCode = 10 // haven't seen this error but it's in game code
 )
 
 func GetBuyResultType(code BuyResultCode) string {
@@ -193,88 +195,35 @@ func GetCurrencyType(currency CurrencyType) string {
 	}
 }
 
-// ExaltationRedeemMessagePacket
-
-func GetExaltationResultType(code int32) string {
-	switch {
-	case code > 0 && code <= 24:
-		return "Success"
-	case code > 24 && code < 29:
-		return "Failed"
-	case code == 29:
-		return "Not Found"
-	default:
-		return "Unknown: " + string(code)
-	}
-}
-
 // GameID
 
 type GameID int32
 
 const (
-	GameIDRealm  GameID = 0
-	GameIDTutorial  GameID = -1
-	GameIDNexus GameID = -2
-	GameIDRandomRealm GameID = -3
+	GameIDRealm         GameID = 0
+	GameIDTutorial      GameID = -1
+	GameIDNexus         GameID = -2
+	GameIDRandomRealm   GameID = -3
 	GameIDNexusTutorial GameID = -4
-	GameIDVault  GameID = -5
-	GameIDMapTest GameID = -6
-	GameIDRedirect GameID = -7
-)
-
-// FailurePacket
-
-type FailureCode int32
-
-const (
-	FailureBadVersion   FailureCode = 4
-	FailureBadKey       FailureCode = 5
-	FailureBadTeleport  FailureCode = 6
-	FailureEmailNeeded  FailureCode = 7
-	FailureTeleCooldown FailureCode = 9
-	FailureWrongServer  FailureCode = 10
-	FailureServerFull   FailureCode = 11
-	FailureServerQueue  FailureCode = 15
-)
-
-type ProtocolErrorCode int32
-
-const (
-	ProtoInvalidMove      ProtocolErrorCode = 5
-	ProtoInvalidPong      ProtocolErrorCode = 9
-	ProtoInvalidSerial    ProtocolErrorCode = 10
-	ProtoInvalidUpdateAck ProtocolErrorCode = 11
-	ProtoInvalidHello     ProtocolErrorCode = 15
-	ProtoIgnoredAck       ProtocolErrorCode = 21
-	ProtoTooManyPackets   ProtocolErrorCode = 42
-	ProtoTooManyEntities  ProtocolErrorCode = 48
-	ProtoRateLimited      ProtocolErrorCode = 64
+	GameIDVault         GameID = -5
+	GameIDMapTest       GameID = -6
+	GameIDRedirect      GameID = -7
+	GameIDQuarantine    GameID = -13
 )
 
 // ChangeGuildRank
 
-type GuildRankType int32
-
-const (
-	GuildInitiate GuildRankType = 0
-	GuildMember   GuildRankType = 10
-	GuildOfficer  GuildRankType = 20
-	GuildLeader   GuildRankType = 30
-	GuildFounder  GuildRankType = 40
-)
-
-func GetGuildRank(rank GuildRankType) string {
+func GetGuildRank(rank client.GuildRankType) string {
 	switch rank {
-	case GuildInitiate:
+	case client.GuildInitiate:
 		return "Initiate"
-	case GuildMember:
+	case client.GuildMember:
 		return "Member"
-	case GuildOfficer:
+	case client.GuildOfficer:
 		return "Officer"
-	case GuildLeader:
+	case client.GuildLeader:
 		return "Leader"
-	case GuildFounder:
+	case client.GuildFounder:
 		return "Founder"
 	default:
 		return "Unknown: " + string(rank)
@@ -286,9 +235,8 @@ func GetGuildRank(rank GuildRankType) string {
 type InvResultCode int32
 
 const (
-	// todo: forgot what these are, double check
-	InvSwapFailed  InvResultCode = 0
-	InvSwapSuccess InvResultCode = 1
+	InvSwapFailed  InvResultCode = -1
+	InvSwapSuccess InvResultCode = 0
 )
 
 func GetInvResultType(code InvResultCode) string {
