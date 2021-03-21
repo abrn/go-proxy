@@ -9,8 +9,16 @@ type UseItemPacket struct {
 	Time       int32
 	SlotObject data.SlotObjectData
 	Position   data.WorldPosData
-	UseType    byte
+	UseType    UseItemType
 }
+
+type UseItemType byte
+
+const (
+	UseTypeDefault UseItemType = 0 // using a consumable
+	UseTypeStart   UseItemType = 1 // starting an ability
+	UseTypeEnd     UseItemType = 2 // ending an ability (i.e ninja star)
+)
 
 func (u *UseItemPacket) Read(p *network.Packet) {
 	u.Time = p.ReadInt32()
@@ -18,12 +26,12 @@ func (u *UseItemPacket) Read(p *network.Packet) {
 	u.SlotObject.Read(p)
 	u.Position = data.WorldPosData{}
 	u.Position.Read(p)
-	u.UseType = p.ReadByte()
+	u.UseType = UseItemType(p.ReadByte())
 }
 
 func (u UseItemPacket) Write(p *network.Packet) {
 	p.WriteInt32(u.Time)
 	u.SlotObject.Write(p)
 	u.Position.Write(p)
-	p.WriteByte(u.UseType)
+	p.WriteByte(byte(u.UseType))
 }

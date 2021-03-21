@@ -1,4 +1,4 @@
-package main
+package config
 
 import (
 	"fmt"
@@ -48,7 +48,7 @@ func GetConfig() Config {
 func readFile() *Config {
 	ex, _ := os.Executable()
 	path := filepath.Dir(ex)
-	f, err := os.Open(path + "\\config.yaml")
+	f, err := os.Open(filepath.Join(path, "..", "config", "config.yaml"))
 	if err != nil {
 		fmt.Printf("Could not find the config.yaml file: %s\n", err.Error())
 		os.Exit(1)

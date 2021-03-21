@@ -14,7 +14,7 @@ type HelloPacket struct {
 	GameNetUserID string
 	PlayPlatform  string
 	PlatformToken string
-	UserToken     string
+	//UserToken     string
 	ClientToken   string
 }
 
@@ -31,7 +31,7 @@ func (h *HelloPacket) Read(p *network.Packet) {
 	h.GameNetUserID = p.ReadString()
 	h.PlayPlatform = p.ReadString()
 	h.PlatformToken = p.ReadString()
-	h.UserToken = p.ReadString()
+	//h.UserToken = p.ReadString()
 	h.ClientToken = p.ReadString()
 }
 
@@ -50,6 +50,6 @@ func (h HelloPacket) Write(p *network.Packet) {
 	p.WriteString(h.GameNetUserID)
 	p.WriteString(h.PlayPlatform)
 	p.WriteString(h.PlatformToken)
-	p.WriteString(h.UserToken)
+	//p.WriteString(h.UserToken)
 	p.WriteString(h.ClientToken)
 }

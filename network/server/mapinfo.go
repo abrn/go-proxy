@@ -11,11 +11,11 @@ type MapInfoPacket struct {
 	Difficulty  int32
 	FP          uint32
 	Background  int32
+	MaxPlayers  int32 // todo: confirm this is right
 	AllowTP     bool
 	ShowDisplay bool
-	MaxPlayers  int16
-	OpenedTime  uint32
-	//ServerVer 	string
+	ServerVer 	string // confirm this is right
+	OpenedTime  uint32 // confirm this is right
 }
 
 func (m *MapInfoPacket) Read(p *network.Packet) {
@@ -27,9 +27,10 @@ func (m *MapInfoPacket) Read(p *network.Packet) {
 	m.Difficulty = p.ReadInt32()
 	m.FP = p.ReadUInt32()
 	m.Background = p.ReadInt32()
+	m.MaxPlayers = p.ReadInt32()
 	m.AllowTP = p.ReadBool()
 	m.ShowDisplay = p.ReadBool()
-	m.MaxPlayers = p.ReadInt16()
+	m.ServerVer = p.ReadString()
 	m.OpenedTime = p.ReadUInt32()
 }
 
@@ -42,8 +43,9 @@ func (m MapInfoPacket) Write(p *network.Packet) {
 	p.WriteInt32(m.Difficulty)
 	p.WriteUInt32(m.FP)
 	p.WriteInt32(m.Background)
+	p.WriteInt32(m.MaxPlayers)
 	p.WriteBool(m.AllowTP)
 	p.WriteBool(m.ShowDisplay)
-	p.WriteInt16(m.MaxPlayers)
+	p.WriteString(m.ServerVer)
 	p.WriteUInt32(m.OpenedTime)
 }

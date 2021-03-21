@@ -5,6 +5,7 @@ import (
 	"net"
 	"os"
 	"os/signal"
+	"proxy/config"
 	"syscall"
 	"time"
 )
@@ -32,7 +33,7 @@ const (
 )
 
 // NewProxy - create a new proxy interface with config options
-func NewProxy(lconn *net.TCPConn, local, remote *net.TCPAddr, conf *Config) *ProxyServer {
+func NewProxy(lconn *net.TCPConn, local, remote *net.TCPAddr, conf *config.Config) *ProxyServer {
 	return &ProxyServer{
 		status:     ProxyStarting,
 		connLocal:  lconn,

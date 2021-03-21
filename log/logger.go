@@ -1,20 +1,22 @@
-package main
+package log
 
 import (
 	"github.com/gookit/color"
 )
 
+var Logger *ColorLogger
+
 var (
 	inner = color.HEXStyle("#cca4ef", "#212121")
 	outer = color.HEXStyle("#5d1ec9", "#212121")
-
-	info = color.HEXStyle("#e600ff")
-	infoPre = color.HEXStyle("#e600ff", "#230026")
+	info = color.HEXStyle("#693c72")
+	infoPre = color.HEXStyle("#693c72", "#1e1121")
 	debug = color.HEXStyle("#9c5cdb")
 	debugPre = color.HEXStyle("#9c5cdb", "#200836")
 	trace = color.HEXStyle("#00c3d9")
 	tracePre = color.HEXStyle("#00c3d9", "#002b30")
-
+	warn = color.HEXStyle("#d97642")
+	warnPre = color.HEXStyle("#d97642", "#33190b")
 	fatal = color.HEXStyle("#ed002b")
 	fatalPre = color.HEXStyle("#ed002b", "#240007")
 )
@@ -61,8 +63,8 @@ func (l ColorLogger) Info(f string, args ...interface{}) {
 
 // Warn - write a yellow warning message
 func (l ColorLogger) Warn(f string, args ...interface{}) {
-	color.Printf("%s ", l.getPrefix())
-	color.Yellow.Printf(f, args...)
+	color.Printf("%s%s ", l.getPrefix(), warnPre.Sprint(" WARN  >"))
+	warn.Printf(f, args...)
 }
 
 // Error - write a red error message

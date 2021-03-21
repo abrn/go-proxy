@@ -5,8 +5,8 @@ import "proxy/network"
 type TextPacket struct {
 	Name         string
 	ObjectID     int32
-	NumStars     int32
-	BubbleTime   int16
+	NumStars     int16
+	BubbleTime   uint32 // todo: check structure here, game code says it's changed
 	Recipient    string
 	Message      string
 	CleanMessage string
@@ -17,8 +17,8 @@ type TextPacket struct {
 func (t *TextPacket) Read(p *network.Packet) {
 	t.Name = p.ReadString()
 	t.ObjectID = p.ReadInt32()
-	t.NumStars = p.ReadInt32()
-	t.BubbleTime = p.ReadInt16()
+	t.NumStars = p.ReadInt16()
+	t.BubbleTime = p.ReadUInt32()
 	t.Recipient = p.ReadString()
 	t.Message = p.ReadString()
 	t.CleanMessage = p.ReadString()
@@ -29,8 +29,8 @@ func (t *TextPacket) Read(p *network.Packet) {
 func (t TextPacket) Write(p *network.Packet) {
 	p.WriteString(t.Name)
 	p.WriteInt32(t.ObjectID)
-	p.WriteInt32(t.NumStars)
-	p.WriteInt16(t.BubbleTime)
+	p.WriteInt16(t.NumStars)
+	p.WriteUInt32(t.BubbleTime)
 	p.WriteString(t.Recipient)
 	p.WriteString(t.Message)
 	p.WriteString(t.CleanMessage)

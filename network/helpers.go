@@ -37,6 +37,7 @@ const (
 	BuyRankTooLow     BuyResultCode = 5
 	BuyNotEnoughFame  BuyResultCode = 6
 	BuyPetFeedSuccess BuyResultCode = 7
+	BuyUnknown2		  BuyResultCode = 10 // haven't seen this error but it's in game code
 )
 
 func GetBuyResultType(code BuyResultCode) string {
@@ -59,6 +60,8 @@ func GetBuyResultType(code BuyResultCode) string {
 		return "Not Enough Fame"
 	case BuyPetFeedSuccess:
 		return "Pet Feed Success"
+	case BuyUnknown2:
+		return "Unknown: code 10"
 	default:
 		return "Unknown: " + string(code)
 	}
@@ -204,6 +207,21 @@ func GetExaltationResultType(code int32) string {
 		return "Unknown: " + string(code)
 	}
 }
+
+// GameID
+
+type GameID int32
+
+const (
+	GameIDRealm  GameID = 0
+	GameIDTutorial  GameID = -1
+	GameIDNexus GameID = -2
+	GameIDRandomRealm GameID = -3
+	GameIDNexusTutorial GameID = -4
+	GameIDVault  GameID = -5
+	GameIDMapTest GameID = -6
+	GameIDRedirect GameID = -7
+)
 
 // FailurePacket
 

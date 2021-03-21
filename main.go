@@ -3,26 +3,28 @@ package main
 import (
 	"net"
 	"os"
+	"proxy/config"
+	"proxy/log"
 	"strconv"
 )
 
 var (
 	Proxy    *ProxyServer
-	Logger   *ColorLogger
-	Settings Config
+	Logger   *log.ColorLogger
+	Settings config.Config
 )
 
 // main - start of the program / load settings and start goroutines
 func main() {
-	Settings = GetConfig()
+	Settings = config.GetConfig()
 	Logger = createLogger(&Settings)
 	startProxy(&Settings)
-	//go startSysHooks()
+	startSysHooks()
 	go startRegWatcher()
 }
 
-// startProxy -
-func startProxy(conf *Config) {
+// startProxy - resolve config IP addresses and create a listener
+func startProxy(conf *config.Config) {
 	Logger.Info("Starting...\n")
 	loc := conf.Client.Host + ":" + strconv.Itoa(conf.Client.Port)
 	rem := conf.Target.Host + ":" + strconv.Itoa(conf.Target.Port)
@@ -33,7 +35,7 @@ func startProxy(conf *Config) {
 		Logger.Error("failed to resolve local address %s - %s\n", loc, err)
 		os.Exit(1)
 	}
-	Logger.Trace("Resolved local address\n")
+	Logger.Debug("Resolved local address\n")
 	// resolve the target server
 	remote, err := net.ResolveTCPAddr("tcp", rem)
 	if err != nil {
@@ -44,7 +46,7 @@ func startProxy(conf *Config) {
 	// try to create a local listener
 	listener, err := net.ListenTCP("tcp", local)
 	if err != nil {
-		Logger.Error("Could not start the server (port %d in use): %s\n", conf.Client.Port, err)
+		Logger.Error("Could not start the server: %s\n", conf.Client.Port, err)
 		Logger.Error("If you have another RotMG proxy open, close it down and try again")
 		os.Exit(1)
 	}
@@ -61,15 +63,20 @@ func startProxy(conf *Config) {
 	}
 }
 
-func createLogger(conf *Config) *ColorLogger {
+// createLogger - set up a logger with a given config (can be nil for default)
+func createLogger(conf *config.Config) *log.ColorLogger {
 	// defaults to false without checking nullptr
 	debug := conf.Log.Debug
 	trace := conf.Log.Trace
 
-	return &ColorLogger{
+	return &log.ColorLogger{
 		VeryVerbose: trace,
 		Verbose:     debug,
 	}
+}
+
+func startSysHooks() {
+
 }
 
 func startRegWatcher() {

@@ -13,6 +13,7 @@ type PlayerShootPacket struct {
 	Angle         float32
 	SpeedMult     int16
 	LifeMult      int16
+	Unknown       byte
 }
 
 func (s *PlayerShootPacket) Read(p *network.Packet) {
@@ -24,6 +25,7 @@ func (s *PlayerShootPacket) Read(p *network.Packet) {
 	s.Angle = p.ReadFloat()
 	s.SpeedMult = p.ReadInt16()
 	s.LifeMult = p.ReadInt16()
+	s.Unknown = p.ReadByte()
 }
 
 func (s PlayerShootPacket) Write(p *network.Packet) {
@@ -34,4 +36,5 @@ func (s PlayerShootPacket) Write(p *network.Packet) {
 	p.WriteFloat(s.Angle)
 	p.WriteInt16(s.SpeedMult)
 	p.WriteInt16(s.LifeMult)
+	p.WriteByte(s.Unknown)
 }
