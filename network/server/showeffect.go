@@ -27,7 +27,7 @@ const (
 	TargetID  EffectBitmask = 64
 )
 
-func (s *ShowEffectPacket) Read(p *network.Packet) {
+func (s *ShowEffectPacket) Read(p *network.GamePacket) {
 	s.Type = p.ReadByte()
 	s.StartPos = data.WorldPosData{}
 	s.EndPos = data.WorldPosData{}

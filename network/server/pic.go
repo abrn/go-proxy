@@ -12,7 +12,7 @@ type BitmapData struct {
 	Data   []byte
 }
 
-func (pp *PicPacket) Read(p *network.Packet) {
+func (pp *PicPacket) Read(p *network.GamePacket) {
 	pp.Data.Width = p.ReadInt32()
 	pp.Data.Height = p.ReadInt32()
 	count := p.ReadInt16()

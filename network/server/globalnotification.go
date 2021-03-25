@@ -21,12 +21,12 @@ const (
 	NotificationExaltation      GlobalNotificationType = 8
 )
 
-func (g *GlobalNotificationPacket) Read(p *network.Packet) {
+func (g *GlobalNotificationPacket) Read(p *network.GamePacket) {
 	g.TypeID = GlobalNotificationType(p.ReadInt32())
 	g.Message = p.ReadString()
 }
 
-func (g GlobalNotificationPacket) Write(p *network.Packet) {
+func (g GlobalNotificationPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(int32(g.TypeID))
 	p.WriteString(g.Message)
 }

@@ -13,7 +13,7 @@ type ReconnectPacket struct {
 	Unknown   int32
 }
 
-func (r *ReconnectPacket) Read(p *network.Packet) {
+func (r *ReconnectPacket) Read(p *network.GamePacket) {
 	r.MapName = p.ReadString()
 	r.Hostname = p.ReadString()
 	r.Port = p.ReadUInt16()
@@ -28,7 +28,7 @@ func (r *ReconnectPacket) Read(p *network.Packet) {
 	r.Unknown = p.ReadInt32()
 }
 
-func (r ReconnectPacket) Write(p *network.Packet) {
+func (r ReconnectPacket) Write(p *network.GamePacket) {
 	p.WriteString(r.MapName)
 	p.WriteString(r.Hostname)
 	p.WriteUInt16(r.Port)

@@ -14,7 +14,7 @@ type ExaltationBonusChangedPacket struct {
 	Mana       byte
 }
 
-func (e *ExaltationBonusChangedPacket) Read(p *network.Packet) {
+func (e *ExaltationBonusChangedPacket) Read(p *network.GamePacket) {
 	e.ObjectType = p.ReadUInt16()
 	e.Dexterity = p.ReadByte()
 	e.Speed = p.ReadByte()
@@ -26,7 +26,7 @@ func (e *ExaltationBonusChangedPacket) Read(p *network.Packet) {
 	e.Life = p.ReadByte()
 }
 
-func (e ExaltationBonusChangedPacket) Write(p *network.Packet) {
+func (e ExaltationBonusChangedPacket) Write(p *network.GamePacket) {
 	p.WriteUInt16(e.ObjectType)
 	p.WriteByte(e.Dexterity)
 	p.WriteByte(e.Speed)

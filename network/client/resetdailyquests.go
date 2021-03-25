@@ -6,10 +6,10 @@ type ResetDailyQuestsPacket struct {
 	Unknown int32
 }
 
-func (r *ResetDailyQuestsPacket) Read(p *network.Packet) {
+func (r *ResetDailyQuestsPacket) Read(p *network.GamePacket) {
 	r.Unknown = p.ReadInt32()
 }
 
-func (r ResetDailyQuestsPacket) Write(p *network.Packet) {
+func (r ResetDailyQuestsPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(r.Unknown)
 }

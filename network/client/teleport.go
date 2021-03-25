@@ -6,10 +6,10 @@ type TeleportPacket struct {
 	ObjectID int32
 }
 
-func (t *TeleportPacket) Read(p *network.Packet) {
+func (t *TeleportPacket) Read(p *network.GamePacket) {
 	t.ObjectID = p.ReadInt32()
 }
 
-func (t TeleportPacket) Write(p *network.Packet) {
+func (t TeleportPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(t.ObjectID)
 }

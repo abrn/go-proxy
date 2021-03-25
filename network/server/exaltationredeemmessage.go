@@ -7,12 +7,12 @@ type ExaltationRedeemMessagePacket struct {
 	Message string
 }
 
-func (e *ExaltationRedeemMessagePacket) Read(p *network.Packet) {
+func (e *ExaltationRedeemMessagePacket) Read(p *network.GamePacket) {
 	e.Success = p.ReadBool()
 	e.Message = p.ReadString()
 }
 
-func (e ExaltationRedeemMessagePacket) Write(p *network.Packet) {
+func (e ExaltationRedeemMessagePacket) Write(p *network.GamePacket) {
 	p.WriteBool(e.Success)
 	p.WriteString(e.Message)
 }

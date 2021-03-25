@@ -14,7 +14,7 @@ type TextPacket struct {
 	StarBg       int32
 }
 
-func (t *TextPacket) Read(p *network.Packet) {
+func (t *TextPacket) Read(p *network.GamePacket) {
 	t.Name = p.ReadString()
 	t.ObjectID = p.ReadInt32()
 	t.NumStars = p.ReadInt16()
@@ -26,7 +26,7 @@ func (t *TextPacket) Read(p *network.Packet) {
 	t.StarBg = p.ReadInt32()
 }
 
-func (t TextPacket) Write(p *network.Packet) {
+func (t TextPacket) Write(p *network.GamePacket) {
 	p.WriteString(t.Name)
 	p.WriteInt32(t.ObjectID)
 	p.WriteInt16(t.NumStars)

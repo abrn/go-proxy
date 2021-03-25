@@ -4,6 +4,6 @@ import "proxy/network"
 
 type QuestFetchAskPacket struct{}
 
-func (q *QuestFetchAskPacket) Read(p *network.Packet) {}
+func (q *QuestFetchAskPacket) Read(p *network.GamePacket) {}
 
-func (q QuestFetchAskPacket) Write(p *network.Packet) {}
+func (q QuestFetchAskPacket) Write(p *network.GamePacket) {}

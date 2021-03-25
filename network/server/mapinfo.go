@@ -18,7 +18,7 @@ type MapInfoPacket struct {
 	OpenedTime  uint32 // confirm this is right
 }
 
-func (m *MapInfoPacket) Read(p *network.Packet) {
+func (m *MapInfoPacket) Read(p *network.GamePacket) {
 	m.Width = p.ReadInt32()
 	m.Height = p.ReadInt32()
 	m.Name = p.ReadString()
@@ -34,7 +34,7 @@ func (m *MapInfoPacket) Read(p *network.Packet) {
 	m.OpenedTime = p.ReadUInt32()
 }
 
-func (m MapInfoPacket) Write(p *network.Packet) {
+func (m MapInfoPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(m.Width)
 	p.WriteInt32(m.Height)
 	p.WriteString(m.Name)

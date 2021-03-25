@@ -16,7 +16,7 @@ type VaultContentPacket struct {
 	NextPotionCount   int16 // the max potion slots after the next upgrade
 }
 
-func (v *VaultContentPacket) Read(p *network.Packet) {
+func (v *VaultContentPacket) Read(p *network.GamePacket) {
 	v.Unknown = p.ReadBool()
 	v.VaultObjectID = p.ReadCompressed()
 	v.GiftObjectID = p.ReadCompressed()
@@ -48,7 +48,7 @@ func (v *VaultContentPacket) Read(p *network.Packet) {
 	v.NextPotionCount = p.ReadInt16()
 }
 
-func (v VaultContentPacket) Write(p *network.Packet) {
+func (v VaultContentPacket) Write(p *network.GamePacket) {
 	p.WriteBool(v.Unknown)
 	p.WriteCompressed(v.VaultObjectID)
 	p.WriteCompressed(v.GiftObjectID)

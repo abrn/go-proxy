@@ -37,12 +37,12 @@ const (
 	ProtoRateLimited      ProtocolErrorCode = 64
 )
 
-func (c *FailurePacket) Read(p *network.Packet) {
+func (c *FailurePacket) Read(p *network.GamePacket) {
 	c.ID = p.ReadInt32()
 	c.Message = p.ReadString()
 }
 
-func (c FailurePacket) Write(p *network.Packet) {
+func (c FailurePacket) Write(p *network.GamePacket) {
 	p.WriteInt32(c.ID)
 	p.WriteString(c.Message)
 }

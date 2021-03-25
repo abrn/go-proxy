@@ -5,6 +5,7 @@ import (
 	"os"
 	"proxy/config"
 	"proxy/log"
+	"proxy/resources"
 	"strconv"
 )
 
@@ -14,10 +15,15 @@ var (
 	Settings config.Config
 )
 
-// main - start of the program / load settings and start goroutines
+// main - starting function
 func main() {
+	// load the config and create a logger
 	Settings = config.GetConfig()
 	Logger = createLogger(&Settings)
+
+	resources.GetServers()
+
+
 	startProxy(&Settings)
 	startSysHooks()
 	go startRegWatcher()

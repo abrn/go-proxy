@@ -9,13 +9,13 @@ type GroundTileData struct {
 	Type uint16
 }
 
-func (t *GroundTileData) Read(p *network.Packet) {
+func (t *GroundTileData) Read(p *network.GamePacket) {
 	t.X = p.ReadInt16()
 	t.Y = p.ReadInt16()
 	t.Type = p.ReadUInt16()
 }
 
-func (t GroundTileData) Write(p *network.Packet) {
+func (t GroundTileData) Write(p *network.GamePacket) {
 	p.WriteInt16(t.X)
 	p.WriteInt16(t.Y)
 	p.WriteUInt16(t.Type)
@@ -38,13 +38,13 @@ type MoveRecord struct {
 	Y    float32
 }
 
-func (mv *MoveRecord) Read(p *network.Packet) {
+func (mv *MoveRecord) Read(p *network.GamePacket) {
 	mv.Time = p.ReadInt32()
 	mv.X = p.ReadFloat()
 	mv.Y = p.ReadFloat()
 }
 
-func (mv MoveRecord) Write(p *network.Packet) {
+func (mv MoveRecord) Write(p *network.GamePacket) {
 	p.WriteInt32(mv.Time)
 	p.WriteFloat(mv.X)
 	p.WriteFloat(mv.Y)
@@ -56,12 +56,12 @@ type WorldPosData struct {
 	Y float32
 }
 
-func (wp *WorldPosData) Read(p *network.Packet) {
+func (wp *WorldPosData) Read(p *network.GamePacket) {
 	wp.X = p.ReadFloat()
 	wp.X = p.ReadFloat()
 }
 
-func (wp WorldPosData) Write(p *network.Packet) {
+func (wp WorldPosData) Write(p *network.GamePacket) {
 	p.WriteFloat(wp.X)
 	p.WriteFloat(wp.Y)
 }

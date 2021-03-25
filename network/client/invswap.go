@@ -12,7 +12,7 @@ type InvSwapPacket struct {
 	NewSlot  data.SlotObjectData
 }
 
-func (s *InvSwapPacket) Read(p *network.Packet) {
+func (s *InvSwapPacket) Read(p *network.GamePacket) {
 	s.Time = p.ReadInt32()
 	s.Position = data.WorldPosData{}
 	s.Position.Read(p)
@@ -22,7 +22,7 @@ func (s *InvSwapPacket) Read(p *network.Packet) {
 	s.NewSlot.Read(p)
 }
 
-func (s InvSwapPacket) Write(p *network.Packet) {
+func (s InvSwapPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(s.Time)
 	s.Position.Write(p)
 	s.OldSlot.Write(p)

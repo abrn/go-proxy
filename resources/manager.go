@@ -1,11 +1,16 @@
 package resources
 
 import (
+	"bytes"
 	"encoding/xml"
 	"errors"
+	"github.com/golang/protobuf/proto"
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
+	"path/filepath"
+	"proxy/log"
 	"strings"
 )
 
@@ -20,46 +25,83 @@ const (
 
 var serverCache *ServerCache
 
-type GameServer struct {
-	Name     string
-	Hostname string
-	Usage    float32
-}
-
 func GetServers() *ServerCache {
-	if serverCache != (&ServerCache{}) {
+	if serverCache != nil {
 		return serverCache
 	}
+	// attempt to load the servers from cache
+	cache, err := loadServers()
+	if err != nil {
+		log.Logger.Warn("Could not find a server cache file.. downloading server list\n")
+	} else {
+		log.Logger.Info("Loaded cached server list!\n")
+		return cache
+	}
+	// download a new server list
 
+	// todo: check if we found a guid + pass from exalt
+
+}
+
+// GetExecutablePath - returns the path where the running binary is located
+func GetExecutablePath() string {
+	ex, _ := os.Executable()
+	path := filepath.Dir(ex)
+	return path
 }
 
 // UnityGET - send a GET request that mimics the unity client
 func UnityGET(res string) (string, error) {
 	client := &http.Client{}
-	request := makeUnityRequest(res, "GET", nil)
+	request := makeRequest(res, "GET", nil, true)
 
 	resp, err := client.Do(request)
 	if err != nil {
 		return "", err
 	}
 	defer resp.Body.Close()
+
+	buf := new(bytes.Buffer)
+	if _, err := buf.ReadFrom(resp.Body); err != nil {
+		return "", err
+	}
+	return buf.String(), nil
 }
 
 // UnityGET - send a POST request that mimics the unity client
 func UnityPOST(res string, data *url.Values) (string, error) {
 	client := &http.Client{}
-	request := makeUnityRequest(res, "POST", data)
+	request := makeRequest(res, "POST", data, true)
 
 	resp, err := client.Do(request)
 	if err != nil {
 		return "", err
 	}
 	defer resp.Body.Close()
+
+	buf := new(bytes.Buffer)
+	if _, err := buf.ReadFrom(resp.Body); err != nil {
+		return "", err
+	}
+	return buf.String(), nil
+}
+
+// loadServers - try loading the server cache file
+func loadServers() (*ServerCache, error) {
+	path := GetExecutablePath()
+	f, err := ioutil.ReadFile(filepath.Join(path, "resources", "cache.servers"))
+	if err != nil {
+		return nil, err
+	}
+	cache := &ServerCache{}
+	if err := proto.Unmarshal(f, cache); err != nil {
+		return nil, err
+	}
+	return cache, nil
 }
 
 // grabServers - request the server endpoint and try to parse the list
 func grabServers() ([]GameServer, error) {
-	path := "/account/servers"
 	values := &url.Values{}
 	values.Set("guid", "NQPWXHHQFCDRDIFJMMXDCDHJZM@ggnetwork.xyz") //todo set guid and pass
 	values.Set("password", "RowJow100998")
@@ -74,8 +116,8 @@ func grabServers() ([]GameServer, error) {
 	}
 }
 
-// makeUnityRequest - create a default unity-like request
-func makeUnityRequest(path string, method string, values *url.Values) *http.Request {
+// makeRequest - create a default http request with the option for Unity headers
+func makeRequest(path string, method string, values *url.Values, unity bool) *http.Request {
 	// todo: check if prod or testing
 	uri, _ := url.ParseRequestURI(appspotURLprod)
 	uri.Path = path
@@ -90,8 +132,11 @@ func makeUnityRequest(path string, method string, values *url.Values) *http.Requ
 	} else {
 		request, _ = http.NewRequest(http.MethodGet, uri.String(), nil)
 	}
-	request.Header.Add("User-Agent", unityUserAgent)
-	request.Header.Add("X-Unity-Version", unityXVersion)
+	// add the headers to mimic the Unity client
+	if unity {
+		request.Header.Add("User-Agent", unityUserAgent)
+		request.Header.Add("X-Unity-Version", unityXVersion)
+	}
 	return request
 }
 

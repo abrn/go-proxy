@@ -6,10 +6,10 @@ type GotoAckPacket struct {
 	Time int32
 }
 
-func (g *GotoAckPacket) Read(p *network.Packet) {
+func (g *GotoAckPacket) Read(p *network.GamePacket) {
 	g.Time = p.ReadInt32()
 }
 
-func (g GotoAckPacket) Write(p *network.Packet) {
+func (g GotoAckPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(g.Time)
 }

@@ -14,7 +14,7 @@ type PetUpgradeRequestPacket struct {
 	CurrencyType byte
 }
 
-func (pu *PetUpgradeRequestPacket) Read(p *network.Packet) {
+func (pu *PetUpgradeRequestPacket) Read(p *network.GamePacket) {
 	pu.TransType = p.ReadByte()
 	pu.PIDOne = p.ReadInt32()
 	pu.PIDTwo = p.ReadInt32()
@@ -30,7 +30,7 @@ func (pu *PetUpgradeRequestPacket) Read(p *network.Packet) {
 	pu.CurrencyType = p.ReadByte()
 }
 
-func (pu PetUpgradeRequestPacket) Write(p *network.Packet) {
+func (pu PetUpgradeRequestPacket) Write(p *network.GamePacket) {
 	p.WriteByte(pu.TransType)
 	p.WriteInt32(pu.PIDOne)
 	p.WriteInt32(pu.PIDTwo)

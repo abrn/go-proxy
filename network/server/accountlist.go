@@ -8,7 +8,7 @@ type AccountListPacket struct {
 	LockAction    int32
 }
 
-func (c *AccountListPacket) Read(p *network.Packet) {
+func (c *AccountListPacket) Read(p *network.GamePacket) {
 	c.AccountListID = p.ReadInt32()
 	count := p.ReadInt16()
 	c.AccountIDs = make([]string, count)
@@ -18,7 +18,7 @@ func (c *AccountListPacket) Read(p *network.Packet) {
 	c.LockAction = p.ReadInt32()
 }
 
-func (c AccountListPacket) Write(p *network.Packet) {
+func (c AccountListPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(c.AccountListID)
 	count := len(c.AccountIDs)
 	p.WriteInt16(int16(count))

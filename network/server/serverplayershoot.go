@@ -14,7 +14,7 @@ type ServerPlayerShootPacket struct {
 	StartingPos   data.WorldPosData
 }
 
-func (s *ServerPlayerShootPacket) Read(p *network.Packet) {
+func (s *ServerPlayerShootPacket) Read(p *network.GamePacket) {
 	s.BulletID = p.ReadByte()
 	s.OwnerID = p.ReadInt32()
 	s.ContainerType = p.ReadInt32()
@@ -25,7 +25,7 @@ func (s *ServerPlayerShootPacket) Read(p *network.Packet) {
 	s.StartingPos = data.WorldPosData{}
 }
 
-func (s ServerPlayerShootPacket) Write(p *network.Packet) {
+func (s ServerPlayerShootPacket) Write(p *network.GamePacket) {
 	p.WriteByte(s.BulletID)
 	p.WriteInt32(s.OwnerID)
 	p.WriteInt32(s.ContainerType)

@@ -6,7 +6,7 @@ type ChangeTradePacket struct {
 	MyOffers []bool
 }
 
-func (c *ChangeTradePacket) Read(p *network.Packet) {
+func (c *ChangeTradePacket) Read(p *network.GamePacket) {
 	count := p.ReadInt16()
 	if count <= 0 {
 		return
@@ -17,7 +17,7 @@ func (c *ChangeTradePacket) Read(p *network.Packet) {
 	}
 }
 
-func (c ChangeTradePacket) Write(p *network.Packet) {
+func (c ChangeTradePacket) Write(p *network.GamePacket) {
 	count := len(c.MyOffers)
 	p.WriteInt16(int16(count))
 	if count <= 0 {

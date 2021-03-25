@@ -11,7 +11,7 @@ type QuestRedeemPacket struct {
 	Slots      []data.SlotObjectData
 }
 
-func (q *QuestRedeemPacket) Read(p *network.Packet) {
+func (q *QuestRedeemPacket) Read(p *network.GamePacket) {
 	q.UnknownOne = p.ReadString()
 	q.QuestID = p.ReadInt32()
 	items := p.ReadInt16() // todo: check if correct int type
@@ -24,7 +24,7 @@ func (q *QuestRedeemPacket) Read(p *network.Packet) {
 	}
 }
 
-func (q QuestRedeemPacket) Write(p *network.Packet) {
+func (q QuestRedeemPacket) Write(p *network.GamePacket) {
 	p.WriteString(q.UnknownOne)
 	p.WriteInt32(q.QuestID)
 	items := len(q.Slots)

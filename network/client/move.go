@@ -13,7 +13,7 @@ type MovePacket struct {
 	Records              []data.MoveRecord
 }
 
-func (m *MovePacket) Read(p *network.Packet) {
+func (m *MovePacket) Read(p *network.GamePacket) {
 	m.TickID = p.ReadInt32()
 	m.TickTime = p.ReadInt32()
 	m.LastServerRealTimeMS = p.ReadUInt32()
@@ -30,7 +30,7 @@ func (m *MovePacket) Read(p *network.Packet) {
 	}
 }
 
-func (m MovePacket) Write(p *network.Packet) {
+func (m MovePacket) Write(p *network.GamePacket) {
 	p.WriteInt32(m.TickID)
 	p.WriteInt32(m.TickTime)
 	p.WriteUInt32(m.LastServerRealTimeMS)

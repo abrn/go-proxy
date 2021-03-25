@@ -16,7 +16,7 @@ type PlayerShootPacket struct {
 	Unknown       byte
 }
 
-func (s *PlayerShootPacket) Read(p *network.Packet) {
+func (s *PlayerShootPacket) Read(p *network.GamePacket) {
 	s.Time = p.ReadInt32()
 	s.BulletID = p.ReadByte()
 	s.ContainerType = p.ReadInt16()
@@ -28,7 +28,7 @@ func (s *PlayerShootPacket) Read(p *network.Packet) {
 	s.Unknown = p.ReadByte()
 }
 
-func (s PlayerShootPacket) Write(p *network.Packet) {
+func (s PlayerShootPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(s.Time)
 	p.WriteByte(s.BulletID)
 	p.WriteInt16(s.ContainerType)

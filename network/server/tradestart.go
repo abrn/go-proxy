@@ -12,7 +12,7 @@ type TradeStartPacket struct {
 	ObjectID   int32 // the clients object ID
 }
 
-func (t *TradeStartPacket) Read(p *network.Packet) {
+func (t *TradeStartPacket) Read(p *network.GamePacket) {
 	myCount := p.ReadInt16()
 	if myCount > 0 {
 		t.MyItems = make([]data.TradeItem, myCount)
@@ -33,7 +33,7 @@ func (t *TradeStartPacket) Read(p *network.Packet) {
 	t.ObjectID = p.ReadInt32()
 }
 
-func (t TradeStartPacket) Write(p *network.Packet) {
+func (t TradeStartPacket) Write(p *network.GamePacket) {
 	myCount := len(t.MyItems)
 	p.WriteInt16(int16(myCount))
 	if myCount > 0 {

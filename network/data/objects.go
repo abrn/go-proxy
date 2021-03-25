@@ -9,13 +9,13 @@ type SlotObjectData struct {
 	ObjectType int32
 }
 
-func (s *SlotObjectData) Read(p *network.Packet) {
+func (s *SlotObjectData) Read(p *network.GamePacket) {
 	s.ObjectID = p.ReadInt32()
 	s.SlotID = p.ReadInt32()
 	s.ObjectType = p.ReadInt32()
 }
 
-func (s SlotObjectData) Write(p *network.Packet) {
+func (s SlotObjectData) Write(p *network.GamePacket) {
 	p.WriteInt32(s.ObjectID)
 	p.WriteInt32(s.SlotID)
 	p.WriteInt32(s.ObjectType)
@@ -29,14 +29,14 @@ type TradeItem struct {
 	Included  bool
 }
 
-func (t *TradeItem) Read(p *network.Packet) {
+func (t *TradeItem) Read(p *network.GamePacket) {
 	t.ItemID = p.ReadInt32()
 	t.SlotType = p.ReadInt32()
 	t.Tradeable = p.ReadBool()
 	t.Included = p.ReadBool()
 }
 
-func (t TradeItem) Write(p *network.Packet) {
+func (t TradeItem) Write(p *network.GamePacket) {
 	p.WriteInt32(t.ItemID)
 	p.WriteInt32(t.SlotType)
 	p.WriteBool(t.Tradeable)
@@ -57,7 +57,7 @@ type QuestData struct {
 	Repeatable   bool
 }
 
-func (q *QuestData) Read(p *network.Packet) {
+func (q *QuestData) Read(p *network.GamePacket) {
 	q.ID = p.ReadString()
 	q.Name = p.ReadString()
 	q.Description = p.ReadString()
@@ -82,7 +82,7 @@ func (q *QuestData) Read(p *network.Packet) {
 	q.Repeatable = p.ReadBool()
 }
 
-func (q QuestData) Write(p *network.Packet) {
+func (q QuestData) Write(p *network.GamePacket) {
 	p.WriteString(q.ID)
 	p.WriteString(q.Name)
 	p.WriteString(q.Description)

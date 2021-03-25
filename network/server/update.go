@@ -11,7 +11,7 @@ type UpdatePacket struct {
 	Drops      []int32
 }
 
-func (u *UpdatePacket) Read(p *network.Packet) {
+func (u *UpdatePacket) Read(p *network.GamePacket) {
 	tiles := int(p.ReadCompressed())
 	if tiles > 0 {
 		u.Tiles = make([]data.GroundTileData, tiles)
@@ -37,7 +37,7 @@ func (u *UpdatePacket) Read(p *network.Packet) {
 	}
 }
 
-func (u UpdatePacket) Write(p *network.Packet) {
+func (u UpdatePacket) Write(p *network.GamePacket) {
 	tiles := len(u.Tiles)
 	p.WriteCompressed(int32(tiles))
 	if tiles > 0 {

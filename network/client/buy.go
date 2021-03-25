@@ -7,12 +7,12 @@ type BuyPacket struct {
 	Quantity int32
 }
 
-func (b *BuyPacket) Read(p *network.Packet) {
+func (b *BuyPacket) Read(p *network.GamePacket) {
 	b.ObjectID = p.ReadInt32()
 	b.Quantity = p.ReadInt32()
 }
 
-func (b BuyPacket) Write(p *network.Packet) {
+func (b BuyPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(b.ObjectID)
 	p.WriteInt32(b.Quantity)
 }

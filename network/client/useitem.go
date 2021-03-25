@@ -20,7 +20,7 @@ const (
 	UseTypeEnd     UseItemType = 2 // ending an ability (i.e ninja star)
 )
 
-func (u *UseItemPacket) Read(p *network.Packet) {
+func (u *UseItemPacket) Read(p *network.GamePacket) {
 	u.Time = p.ReadInt32()
 	u.SlotObject = data.SlotObjectData{}
 	u.SlotObject.Read(p)
@@ -29,7 +29,7 @@ func (u *UseItemPacket) Read(p *network.Packet) {
 	u.UseType = UseItemType(p.ReadByte())
 }
 
-func (u UseItemPacket) Write(p *network.Packet) {
+func (u UseItemPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(u.Time)
 	u.SlotObject.Write(p)
 	u.Position.Write(p)

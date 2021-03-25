@@ -10,7 +10,7 @@ type QuestFetchResponsePacket struct {
 	Unknown int32
 }
 
-func (q *QuestFetchResponsePacket) Read(p *network.Packet) {
+func (q *QuestFetchResponsePacket) Read(p *network.GamePacket) {
 	count := p.ReadInt16() // todo: check if this is the right int type
 	if count > 0 {
 		q.Quests = make([]data.QuestData, count)
@@ -22,7 +22,7 @@ func (q *QuestFetchResponsePacket) Read(p *network.Packet) {
 	q.Unknown = p.ReadInt32()
 }
 
-func (q QuestFetchResponsePacket) Write(p *network.Packet) {
+func (q QuestFetchResponsePacket) Write(p *network.GamePacket) {
 	count := len(q.Quests)
 	p.WriteInt16(int16(count))
 	if count > 0 {

@@ -16,7 +16,7 @@ type AoEPacket struct {
 	ArmorPierce    bool
 }
 
-func (a *AoEPacket) Read(p *network.Packet) {
+func (a *AoEPacket) Read(p *network.GamePacket) {
 	a.Position = data.WorldPosData{}
 	a.Position.Read(p)
 	a.Radius = p.ReadFloat()
@@ -29,7 +29,7 @@ func (a *AoEPacket) Read(p *network.Packet) {
 	a.ArmorPierce = p.ReadBool()
 }
 
-func (a AoEPacket) Write(p *network.Packet) {
+func (a AoEPacket) Write(p *network.GamePacket) {
 	a.Position.Write(p)
 	p.WriteFloat(a.Radius)
 	p.WriteUInt16(a.Damage)

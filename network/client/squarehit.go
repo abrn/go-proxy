@@ -8,13 +8,13 @@ type SquareHitPacket struct {
 	ObjectID int32
 }
 
-func (s *SquareHitPacket) Read(p *network.Packet) {
+func (s *SquareHitPacket) Read(p *network.GamePacket) {
 	s.Time = p.ReadInt32()
 	s.BulletID = p.ReadByte()
 	s.ObjectID = p.ReadInt32()
 }
 
-func (s SquareHitPacket) Write(p *network.Packet) {
+func (s SquareHitPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(s.Time)
 	p.WriteByte(s.BulletID)
 	p.WriteInt32(s.ObjectID)

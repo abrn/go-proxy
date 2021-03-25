@@ -10,7 +10,7 @@ type AllyShootPacket struct {
 	Inspired      bool // whether the shot is affected by a Bard buff
 }
 
-func (a *AllyShootPacket) Read(p *network.Packet) {
+func (a *AllyShootPacket) Read(p *network.GamePacket) {
 	a.BulletID = p.ReadByte()
 	a.OwnerID = p.ReadInt32()
 	a.ContainerType = p.ReadUInt16()
@@ -18,7 +18,7 @@ func (a *AllyShootPacket) Read(p *network.Packet) {
 	a.Inspired = p.ReadBool()
 }
 
-func (a AllyShootPacket) Write(p *network.Packet) {
+func (a AllyShootPacket) Write(p *network.GamePacket) {
 	p.WriteByte(a.BulletID)
 	p.WriteInt32(a.OwnerID)
 	p.WriteUInt16(a.ContainerType)

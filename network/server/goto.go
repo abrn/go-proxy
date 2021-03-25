@@ -10,13 +10,13 @@ type GotoPacket struct {
 	Location data.WorldPosData
 }
 
-func (g *GotoPacket) Read(p *network.Packet) {
+func (g *GotoPacket) Read(p *network.GamePacket) {
 	g.ObjectID = p.ReadInt32()
 	g.Location = data.WorldPosData{}
 	g.Location.Read(p)
 }
 
-func (g GotoPacket) Write(p *network.Packet) {
+func (g GotoPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(g.ObjectID)
 	g.Location.Write(p)
 }

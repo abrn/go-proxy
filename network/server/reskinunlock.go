@@ -7,12 +7,12 @@ type ReskinUnlockPacket struct {
 	IsPetSkin int32
 }
 
-func (r *ReskinUnlockPacket) Read(p *network.Packet) {
+func (r *ReskinUnlockPacket) Read(p *network.GamePacket) {
 	r.SkinID = p.ReadInt32()
 	r.IsPetSkin = p.ReadInt32()
 }
 
-func (r ReskinUnlockPacket) Write(p *network.Packet) {
+func (r ReskinUnlockPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(r.SkinID)
 	p.WriteInt32(r.IsPetSkin)
 }

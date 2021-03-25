@@ -16,7 +16,7 @@ type EnemyShoot struct {
 	AngleInc   float32
 }
 
-func (s *EnemyShoot) Read(p *network.Packet) {
+func (s *EnemyShoot) Read(p *network.GamePacket) {
 	s.BulletID = p.ReadByte()
 	s.OwnerID = p.ReadInt32()
 	s.BulletType = p.ReadByte()
@@ -33,7 +33,7 @@ func (s *EnemyShoot) Read(p *network.Packet) {
 	}
 }
 
-func (s EnemyShoot) Write(p *network.Packet) {
+func (s EnemyShoot) Write(p *network.GamePacket) {
 	p.WriteByte(s.BulletID)
 	p.WriteInt32(s.OwnerID)
 	p.WriteByte(s.BulletType)

@@ -11,7 +11,7 @@ type InvResultPacket struct {
 	NewSlot data.SlotObjectData
 }
 
-func (i *InvResultPacket) Read(p *network.Packet) {
+func (i *InvResultPacket) Read(p *network.GamePacket) {
 	i.Success = p.ReadBool()
 	i.OldSlot = data.SlotObjectData{}
 	i.OldSlot.Read(p)
@@ -19,7 +19,7 @@ func (i *InvResultPacket) Read(p *network.Packet) {
 	i.NewSlot.Read(p)
 }
 
-func (i InvResultPacket) Write(p *network.Packet) {
+func (i InvResultPacket) Write(p *network.GamePacket) {
 	p.WriteBool(i.Success)
 	i.OldSlot.Write(p)
 	i.NewSlot.Write(p)

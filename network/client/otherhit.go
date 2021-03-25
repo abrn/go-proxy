@@ -9,14 +9,14 @@ type OtherHitPacket struct {
 	TargetID int32
 }
 
-func (c *OtherHitPacket) Read(p *network.Packet) {
+func (c *OtherHitPacket) Read(p *network.GamePacket) {
 	c.Time = p.ReadInt32()
 	c.BulletID = p.ReadByte()
 	c.ObjectID = p.ReadInt32()
 	c.TargetID = p.ReadInt32()
 }
 
-func (c OtherHitPacket) Write(p *network.Packet) {
+func (c OtherHitPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(c.Time)
 	p.WriteByte(c.BulletID)
 	p.WriteInt32(c.ObjectID)

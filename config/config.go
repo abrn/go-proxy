@@ -5,6 +5,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"os"
 	"path/filepath"
+	"proxy/resources"
 )
 
 type Config struct {
@@ -46,9 +47,8 @@ func GetConfig() Config {
 
 // readFile - try to open the config file and parse into a struct
 func readFile() *Config {
-	ex, _ := os.Executable()
-	path := filepath.Dir(ex)
-	f, err := os.Open(filepath.Join(path, "..", "config", "config.yaml"))
+	path := resources.GetExecutablePath()
+	f, err := os.Open(filepath.Join(path, "config", "config.yaml"))
 	if err != nil {
 		fmt.Printf("Could not find the config.yaml file: %s\n", err.Error())
 		os.Exit(1)

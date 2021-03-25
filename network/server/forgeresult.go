@@ -10,7 +10,7 @@ type ForgeResultPacket struct {
 	Items   []data.SlotObjectData
 }
 
-func (f *ForgeResultPacket) Read(p *network.Packet) {
+func (f *ForgeResultPacket) Read(p *network.GamePacket) {
 	f.Success = p.ReadBool()
 	count := p.ReadInt16()
 	f.Items = make([]data.SlotObjectData, count)
@@ -20,7 +20,7 @@ func (f *ForgeResultPacket) Read(p *network.Packet) {
 	}
 }
 
-func (f ForgeResultPacket) Write(p *network.Packet) {
+func (f ForgeResultPacket) Write(p *network.GamePacket) {
 	p.WriteBool(f.Success)
 	count := len(f.Items)
 	if count <= 0 {

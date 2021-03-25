@@ -17,12 +17,12 @@ const (
 	GuildFounder  GuildRankType = 40
 )
 
-func (c *ChangeGuildRankPacket) Read(p *network.Packet) {
+func (c *ChangeGuildRankPacket) Read(p *network.GamePacket) {
 	c.Name = p.ReadString()
 	c.Rank = GuildRankType(p.ReadByte())
 }
 
-func (c ChangeGuildRankPacket) Write(p *network.Packet) {
+func (c ChangeGuildRankPacket) Write(p *network.GamePacket) {
 	p.WriteString(c.Name)
 	p.WriteByte(byte(c.Rank))
 }

@@ -10,7 +10,7 @@ type ForgeRequestPacket struct {
 	Slots    []data.SlotObjectData
 }
 
-func (f *ForgeRequestPacket) Read(p *network.Packet) {
+func (f *ForgeRequestPacket) Read(p *network.GamePacket) {
 	f.ObjectID = p.ReadInt32()
 	items := p.ReadInt32()
 	if items > 0 {
@@ -22,7 +22,7 @@ func (f *ForgeRequestPacket) Read(p *network.Packet) {
 	}
 }
 
-func (f ForgeRequestPacket) Write(p *network.Packet) {
+func (f ForgeRequestPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(f.ObjectID)
 	items := len(f.Slots)
 	if items > 0 {

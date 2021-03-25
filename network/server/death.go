@@ -18,7 +18,7 @@ type UnknownDeathType struct {
 	IntTwo int32
 }
 
-func (d *DeathPacket) Read(p *network.Packet) {
+func (d *DeathPacket) Read(p *network.GamePacket) {
 	d.AccountID = p.ReadString()
 	d.CharID = p.ReadInt32()
 	d.KilledBy = p.ReadString()
@@ -38,7 +38,7 @@ func (d *DeathPacket) Read(p *network.Packet) {
 }
 
 // todo: fix writer after unknown struct reversed
-func (d DeathPacket) Write(p *network.Packet) {
+func (d DeathPacket) Write(p *network.GamePacket) {
 	p.WriteString(d.AccountID)
 	p.WriteInt32(d.CharID)
 	p.WriteString(d.KilledBy)

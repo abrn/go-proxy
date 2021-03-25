@@ -8,12 +8,12 @@ type QueueMessagePacket struct {
 	MaxPosition     uint16
 }
 
-func (q *QueueMessagePacket) Read(p *network.Packet) {
+func (q *QueueMessagePacket) Read(p *network.GamePacket) {
 	q.CurrentPosition = p.ReadUInt16()
 	q.MaxPosition = p.ReadUInt16()
 }
 
-func (q QueueMessagePacket) Write(p *network.Packet) {
+func (q QueueMessagePacket) Write(p *network.GamePacket) {
 	p.WriteUInt16(q.CurrentPosition)
 	p.WriteUInt16(q.MaxPosition)
 }

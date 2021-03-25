@@ -25,7 +25,7 @@ const (
 	DamageTypeLaser       DamageType = 4
 )
 
-func (d *DamagePacket) Read(p *network.Packet) {
+func (d *DamagePacket) Read(p *network.GamePacket) {
 	d.TargetID = p.ReadInt32()
 	effects := p.ReadByte()
 	if effects > 0 {
@@ -44,7 +44,7 @@ func (d *DamagePacket) Read(p *network.Packet) {
 	d.ObjectID = p.ReadInt32()
 }
 
-func (d DamagePacket) Write(p *network.Packet) {
+func (d DamagePacket) Write(p *network.GamePacket) {
 	p.WriteInt32(d.TargetID)
 	effects := len(d.Effects)
 	if effects > 0 {

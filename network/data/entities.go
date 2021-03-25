@@ -8,13 +8,13 @@ type ObjectData struct {
 	Status ObjectStatusData
 }
 
-func (o *ObjectData) Read(p *network.Packet) {
+func (o *ObjectData) Read(p *network.GamePacket) {
 	o.Type = p.ReadUInt16()
 	o.Status = ObjectStatusData{}
 	o.Status.Read(p)
 }
 
-func (o ObjectData) Write(p *network.Packet) {
+func (o ObjectData) Write(p *network.GamePacket) {
 	p.WriteUInt16(o.Type)
 	o.Status.Write(p)
 }
@@ -26,7 +26,7 @@ type ObjectStatusData struct {
 	Stats    []StatData // todo: FIX STATDATA
 }
 
-func (o *ObjectStatusData) Read(p *network.Packet) {
+func (o *ObjectStatusData) Read(p *network.GamePacket) {
 	o.ObjectID = p.ReadCompressed()
 	o.Position = WorldPosData{}
 	o.Position.Read(p)
@@ -41,7 +41,7 @@ func (o *ObjectStatusData) Read(p *network.Packet) {
 	}
 }
 
-func (o ObjectStatusData) Write(p *network.Packet) {
+func (o ObjectStatusData) Write(p *network.GamePacket) {
 	p.WriteCompressed(o.ObjectID)
 	o.Position.Write(p)
 	statCount := len(o.Stats)

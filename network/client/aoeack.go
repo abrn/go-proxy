@@ -10,13 +10,13 @@ type AoEAckPacket struct {
 	Position data.WorldPosData
 }
 
-func (a *AoEAckPacket) Read(p *network.Packet) {
+func (a *AoEAckPacket) Read(p *network.GamePacket) {
 	a.Time = p.ReadInt32()
 	a.Position = data.WorldPosData{}
 	a.Position.Read(p)
 }
 
-func (a AoEAckPacket) Write(p *network.Packet) {
+func (a AoEAckPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(a.Time)
 	a.Position.Write(p)
 }

@@ -6,7 +6,7 @@ type ForgeUnlockedBlueprintsPacket struct {
 	Blueprints []int32 // an array of blueprint item IDs
 }
 
-func (f *ForgeUnlockedBlueprintsPacket) Read(p *network.Packet) {
+func (f *ForgeUnlockedBlueprintsPacket) Read(p *network.GamePacket) {
 	count := p.ReadByte()
 	if count <= 0 {
 		return
@@ -17,7 +17,7 @@ func (f *ForgeUnlockedBlueprintsPacket) Read(p *network.Packet) {
 	}
 }
 
-func (f ForgeUnlockedBlueprintsPacket) Write(p *network.Packet) {
+func (f ForgeUnlockedBlueprintsPacket) Write(p *network.GamePacket) {
 	count := len(f.Blueprints)
 	p.WriteByte(byte(count))
 	if count <= 0 {

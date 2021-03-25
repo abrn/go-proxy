@@ -9,14 +9,14 @@ type HatchPetPacket struct {
 	Unknown  bool
 }
 
-func (h *HatchPetPacket) Read(p *network.Packet) {
+func (h *HatchPetPacket) Read(p *network.GamePacket) {
 	h.PetName = p.ReadString()
 	h.ItemType = p.ReadInt32()
 	h.PetType = p.ReadInt32()
 	h.Unknown = p.ReadBool()
 }
 
-func (h HatchPetPacket) Write(p *network.Packet) {
+func (h HatchPetPacket) Write(p *network.GamePacket) {
 	p.WriteString(h.PetName)
 	p.WriteInt32(h.PetType)
 	p.WriteInt32(h.ItemType)

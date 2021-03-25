@@ -9,14 +9,14 @@ type EnemyHitPacket struct {
 	Killed   bool
 }
 
-func (e *EnemyHitPacket) Read(p *network.Packet) {
+func (e *EnemyHitPacket) Read(p *network.GamePacket) {
 	e.Time = p.ReadInt32()
 	e.BulletID = p.ReadByte()
 	e.TargetID = p.ReadInt32()
 	e.Killed = p.ReadBool()
 }
 
-func (e EnemyHitPacket) Write(p *network.Packet) {
+func (e EnemyHitPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(e.Time)
 	p.WriteByte(e.BulletID)
 	p.WriteInt32(e.TargetID)

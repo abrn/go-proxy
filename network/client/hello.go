@@ -18,7 +18,7 @@ type HelloPacket struct {
 	ClientToken   string
 }
 
-func (h *HelloPacket) Read(p *network.Packet) {
+func (h *HelloPacket) Read(p *network.GamePacket) {
 	h.BuildVersion = p.ReadString()
 	h.GameId = p.ReadInt32()
 	h.AccessToken = p.ReadString()
@@ -35,7 +35,7 @@ func (h *HelloPacket) Read(p *network.Packet) {
 	h.ClientToken = p.ReadString()
 }
 
-func (h HelloPacket) Write(p *network.Packet) {
+func (h HelloPacket) Write(p *network.GamePacket) {
 	p.WriteString(h.BuildVersion)
 	p.WriteInt32(h.GameId)
 	p.WriteString(h.AccessToken)

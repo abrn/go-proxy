@@ -8,13 +8,13 @@ type CreateSuccessPacket struct {
 	Unknown  string // probably clientToken
 }
 
-func (c *CreateSuccessPacket) Read(p *network.Packet) {
+func (c *CreateSuccessPacket) Read(p *network.GamePacket) {
 	c.ObjectID = p.ReadInt32()
 	c.CharID = p.ReadInt32()
 	c.Unknown = p.ReadString()
 }
 
-func (c CreateSuccessPacket) Write(p *network.Packet) {
+func (c CreateSuccessPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(c.ObjectID)
 	p.WriteInt32(c.CharID)
 	p.WriteString(c.Unknown)

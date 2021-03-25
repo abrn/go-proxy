@@ -7,12 +7,12 @@ type GuildResultPacket struct {
 	Message string
 }
 
-func (g *GuildResultPacket) Read(p *network.Packet) {
+func (g *GuildResultPacket) Read(p *network.GamePacket) {
 	g.Success = p.ReadBool()
 	g.Message = p.ReadString()
 }
 
-func (g GuildResultPacket) Write(p *network.Packet) {
+func (g GuildResultPacket) Write(p *network.GamePacket) {
 	p.WriteBool(g.Success)
 	p.WriteString(g.Message)
 }

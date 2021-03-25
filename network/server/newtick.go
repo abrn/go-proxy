@@ -13,7 +13,7 @@ type NewTickPacket struct {
 	Statuses         []data.ObjectStatusData
 }
 
-func (n *NewTickPacket) Read(p *network.Packet) {
+func (n *NewTickPacket) Read(p *network.GamePacket) {
 	n.TickID = p.ReadInt32()
 	n.TickTime = p.ReadInt32()
 	n.ServerRealTimeMS = p.ReadUInt32()
@@ -29,7 +29,7 @@ func (n *NewTickPacket) Read(p *network.Packet) {
 	}
 }
 
-func (n NewTickPacket) Write(p *network.Packet) {
+func (n NewTickPacket) Write(p *network.GamePacket) {
 	p.WriteInt32(n.TickID)
 	p.WriteInt32(n.TickTime)
 	p.WriteUInt32(n.ServerRealTimeMS)
