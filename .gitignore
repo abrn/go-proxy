@@ -13,3 +13,6 @@
 
 # Output 
 *.out
+*.cmake
+
+dll/cmake-build-debug
