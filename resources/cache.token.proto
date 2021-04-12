@@ -3,11 +3,12 @@ package resources;
 option go_package = "resources";
 import "google/protobuf/timestamp.proto";
 
-message ServerCache {
+message TokenCache {
   google.protobuf.Timestamp timestamp = 1;
-  repeated Server servers = 2;
-  message Server {
-    string name = 1;
-    string hostname = 2;
+  repeated AccountTokenCache accounts = 2;
+  message AccountTokenCache {
+    string email = 1;
+    string token = 2;
+    int32 expiry = 3;
   }
 }

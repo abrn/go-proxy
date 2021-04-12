@@ -14,15 +14,6 @@ import (
 	"strings"
 )
 
-const (
-	resourceURL    string = "https://rotmg.network"
-	appspotURLprod string = "https://realmofthemadgod.com"
-	appspotURLtest string = "https://test.realmofthemadgod.com"
-
-	unityUserAgent string = "UnityPlayer/2019.4.9f1 (UnityWebRequest/1.0, libcurl/7.52.0-DEV)"
-	unityXVersion  string = "2019.4.9f1"
-)
-
 var serverCache *ServerCache
 
 func GetServers() *ServerCache {
@@ -32,7 +23,7 @@ func GetServers() *ServerCache {
 	// attempt to load the servers from cache
 	cache, err := loadServers()
 	if err != nil {
-		log.Logger.Warn("Could not find a server cache file.. downloading server list\n")
+		log.Logger.Warn(" Could not find a server cache file.. downloading server list\n")
 	} else {
 		log.Logger.Info("Loaded cached server list!\n")
 		return cache
@@ -119,7 +110,7 @@ func grabServers() ([]GameServer, error) {
 // makeRequest - create a default http request with the option for Unity headers
 func makeRequest(path string, method string, values *url.Values, unity bool) *http.Request {
 	// todo: check if prod or testing
-	uri, _ := url.ParseRequestURI(appspotURLprod)
+	uri, _ := url.ParseRequestURI(AppspotURLprod)
 	uri.Path = path
 
 	var request *http.Request
@@ -134,8 +125,8 @@ func makeRequest(path string, method string, values *url.Values, unity bool) *ht
 	}
 	// add the headers to mimic the Unity client
 	if unity {
-		request.Header.Add("User-Agent", unityUserAgent)
-		request.Header.Add("X-Unity-Version", unityXVersion)
+		request.Header.Add("User-Agent", UnityUserAgent)
+		request.Header.Add("X-Unity-Version", UnityXVersion)
 	}
 	return request
 }
