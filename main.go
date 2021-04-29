@@ -6,6 +6,7 @@ import (
 	"proxy/config"
 	"proxy/log"
 	"proxy/resources"
+	"proxy/syscall/windows"
 	"strconv"
 )
 
@@ -20,9 +21,11 @@ func main() {
 	// load the config and create a logger
 	Settings = config.GetConfig()
 	Logger = createLogger(&Settings)
-
+	resolved := windows.ResolveDNSCheck()
+	if !resolved {
+		os.Exit(1)
+	}
 	resources.GetServers()
-
 
 	startProxy(&Settings)
 	startSysHooks()
