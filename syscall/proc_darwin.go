@@ -1,4 +1,0 @@
-// +build darwin
-
-package syscall
-

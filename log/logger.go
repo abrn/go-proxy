@@ -21,15 +21,6 @@ var (
 	fatalPre = color.HEXStyle("#ed002b", "#240007")
 )
 
-// LogInterface - the main interface for each logger type
-type LogInterface interface {
-	Trace(f string, args ...interface{})
-	Debug(f string, args ...interface{})
-	Info(f string, args ...interface{})
-	Warn(f string, args ...interface{})
-	Error(f string, args ...interface{})
-}
-
 // ColorLogger - logs Output in color with optional verbosity
 type ColorLogger struct {
 	VeryVerbose bool
@@ -89,3 +80,12 @@ func (l NoLogger) Debug(f string, args ...interface{}) {}
 func (l NoLogger) Info(f string, args ...interface{})  {}
 func (l NoLogger) Warn(f string, args ...interface{})  {}
 func (l NoLogger) Error(f string, args ...interface{}) {}
+
+// InterfaceLogger - the main interface for each logger type
+type InterfaceLogger interface {
+	Trace(f string, args ...interface{})
+	Debug(f string, args ...interface{})
+	Info(f string, args ...interface{})
+	Warn(f string, args ...interface{})
+	Error(f string, args ...interface{})
+}
