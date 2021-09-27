@@ -16,15 +16,25 @@ var (
 	Settings config.Config
 )
 
-// main - starting function
+// main - the starting point of the whole application
 func main() {
 	// load the config and create a logger
 	Settings = config.GetConfig()
 	Logger = createLogger(&Settings)
+
+	// todo: possibly merge this into a StartupDebug function
+	// todo: add OpenProcess antidebug technique here
+	// todo: move this to syscall/util because it needs mac support too
 	resolved := windows.ResolveDNSCheck()
 	if !resolved {
 		os.Exit(1)
 	}
+
+	// todo: check for a license file, validate it and store the license info
+	//
+	// if license.Version = "free" then
+	//
+	// todo:
 	resources.GetServers()
 
 	startProxy(&Settings)

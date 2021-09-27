@@ -33,7 +33,16 @@ type Config struct {
 	} `yaml:"log"`
 }
 
+type StorageConfigType string
+
+const (
+	StorageConfigRegistry StorageConfigType
+
+)
+
 var SavedConfig *Config
+
+// TODO: add 2 other ways to store configs: secure registry or json files
 
 // GetConfig - return the parsed config file
 func GetConfig() Config {
@@ -58,6 +67,7 @@ func readFile() *Config {
 	var config Config
 	decoder := yaml.NewDecoder(f)
 	err = decoder.Decode(&config)
+	// t
 	if err != nil {
 		fmt.Printf("Error while reading config.yaml: %s\n", err.Error())
 		os.Exit(0)
