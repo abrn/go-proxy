@@ -8,9 +8,10 @@ type GlobalNotificationPacket struct {
 }
 
 type GlobalNotificationType int32
+
 /**
 Constants for notification types which will be converted on read, write and printing
- */
+*/
 const (
 	NotificationXP              GlobalNotificationType = 0
 	NotificationDamage          GlobalNotificationType = 1

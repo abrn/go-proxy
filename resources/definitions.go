@@ -17,16 +17,16 @@ const (
 
 // Account - represents a game account
 type Account struct {
-	Email string
-	Password string
-	Username string
-	AccountID string
-	Verified bool
-	Banned bool
-	Muted int32
-	LastServer string
-	TotalFame int32
-	ForgeFire int32
+	Email       string
+	Password    string
+	Username    string
+	AccountID   string
+	Verified    bool
+	Banned      bool
+	Muted       int32
+	LastServer  string
+	TotalFame   int32
+	ForgeFire   int32
 	PetYardType byte
 }
 
@@ -34,7 +34,6 @@ type Account struct {
 
 // Character - represents a game character
 type Character struct {
-
 }
 
 // CharactersURL - the appspot endpoint used to grab the character list, pets and vault
@@ -45,23 +44,21 @@ type AccountXML struct {
 
 /* // // PET // // // // // */
 
-
-
 /* // // ACCESSTOKEN // // */
 
 type AccessTokenXML struct {
-	Token string `xml:"AccessToken"`
-	Timestamp string `xml:"AccessTokenTimestamp"`
+	Token      string `xml:"AccessToken"`
+	Timestamp  string `xml:"AccessTokenTimestamp"`
 	Expiration string `xml:"AccessTokenExpiration"`
 }
 
 // VerifyAccessTokenRequest - the POST data needed to verify an access token
 type VerifyAccessTokenRequest struct {
-	clientToken string
-	accessToken string
-	gameNet string
+	clientToken   string
+	accessToken   string
+	gameNet       string
 	gameNetUserID string
-	playPlatform string
+	playPlatform  string
 }
 
 // VerifyAccessTokenURL - the appspot endpoint used to verify access tokens
@@ -93,19 +90,11 @@ type ServersXML struct {
 
 // ServerXML - struct for marshalling the servers response
 type ServerXML struct {
-	XMLName xml.Name	`xml:"Server"`
-	Name	string `xml:"Name"`
-	DNS 	string `xml:"DNS"`
-	Usage string `xml:"Usage"`
+	XMLName xml.Name `xml:"Server"`
+	Name    string   `xml:"Name"`
+	DNS     string   `xml:"DNS"`
+	Usage   string   `xml:"Usage"`
 }
 
 // ServersURL - the appspot endpoint to grab servers from
 const ServersURL string = "/account/servers"
-
-
-
-
-
-
-
-

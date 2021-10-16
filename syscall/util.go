@@ -3,8 +3,8 @@ package syscall
 import (
 	"os"
 	"proxy/log"
-    "proxy/syscall/windows"
-    "runtime"
+	"proxy/syscall/windows"
+	"runtime"
 	"strings"
 )
 
@@ -42,4 +42,3 @@ func SetOperatingSystem() {
 		os.Exit(1)
 	}
 }
-

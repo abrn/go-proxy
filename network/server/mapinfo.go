@@ -14,7 +14,7 @@ type MapInfoPacket struct {
 	MaxPlayers  int32 // todo: confirm this is right
 	AllowTP     bool
 	ShowDisplay bool
-	ServerVer 	string // confirm this is right
+	ServerVer   string // confirm this is right
 	OpenedTime  uint32 // confirm this is right
 }
 

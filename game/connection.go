@@ -1,13 +1,13 @@
 package game
 
 import (
-    "bufio"
-    "net"
+	"bufio"
+	"net"
 )
 
 type Connection struct {
-    Connected bool
-    Destroyed bool
-    Handler   net.Conn
-    Socket    *bufio.ReadWriter
+	Connected bool
+	Destroyed bool
+	Handler   net.Conn
+	Socket    *bufio.ReadWriter
 }

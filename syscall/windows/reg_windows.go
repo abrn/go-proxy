@@ -22,8 +22,8 @@ type RegistryData struct {
 }
 
 const (
-	RegRootKey   gowin32.RegRoot = wrappers.HKEY_CURRENT_USER
-	RegSubKey    string          = "Software\\DECA Live Operations GmbH\\RotMGExalt"
+	RegRootKey gowin32.RegRoot = wrappers.HKEY_CURRENT_USER
+	RegSubKey  string          = "Software\\DECA Live Operations GmbH\\RotMGExalt"
 )
 
 var (

@@ -14,7 +14,7 @@ const (
 	FailureBadKey       FailureCode = 5
 	FailureBadTeleport  FailureCode = 6
 	FailureEmailNeeded  FailureCode = 7
-	FailureUnknown1		FailureCode = 8
+	FailureUnknown1     FailureCode = 8
 	FailureTeleCooldown FailureCode = 9
 	FailureWrongServer  FailureCode = 10
 	FailureServerFull   FailureCode = 14

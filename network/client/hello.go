@@ -15,7 +15,7 @@ type HelloPacket struct {
 	PlayPlatform  string
 	PlatformToken string
 	//UserToken     string
-	ClientToken   string
+	ClientToken string
 }
 
 func (h *HelloPacket) Read(p *network.GamePacket) {

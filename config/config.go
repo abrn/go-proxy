@@ -18,7 +18,7 @@ type Config struct {
 		Port int    `yaml:"port"`
 	} `yaml:"server"`
 	ClientToken string `yaml:"clientToken"`
-	Keys struct {
+	Keys        struct {
 		Incoming string `yaml:"incoming"`
 		Outgoing string `yaml:"outgoing"`
 	} `yaml:"keys"`
@@ -32,13 +32,6 @@ type Config struct {
 		} `yaml:"packets"`
 	} `yaml:"log"`
 }
-
-type StorageConfigType string
-
-const (
-	StorageConfigRegistry StorageConfigType
-
-)
 
 var SavedConfig *Config
 

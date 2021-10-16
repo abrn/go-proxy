@@ -7,17 +7,17 @@ import (
 var Logger *ColorLogger
 
 var (
-	inner = color.HEXStyle("#cca4ef", "#212121")
-	outer = color.HEXStyle("#5d1ec9", "#212121")
-	info = color.HEXStyle("#693c72")
-	infoPre = color.HEXStyle("#693c72", "#1e1121")
-	debug = color.HEXStyle("#9c5cdb")
+	inner    = color.HEXStyle("#cca4ef", "#212121")
+	outer    = color.HEXStyle("#5d1ec9", "#212121")
+	info     = color.HEXStyle("#693c72")
+	infoPre  = color.HEXStyle("#693c72", "#1e1121")
+	debug    = color.HEXStyle("#9c5cdb")
 	debugPre = color.HEXStyle("#9c5cdb", "#200836")
-	trace = color.HEXStyle("#00c3d9")
+	trace    = color.HEXStyle("#00c3d9")
 	tracePre = color.HEXStyle("#00c3d9", "#002b30")
-	warn = color.HEXStyle("#d97642")
-	warnPre = color.HEXStyle("#d97642", "#33190b")
-	fatal = color.HEXStyle("#ed002b")
+	warn     = color.HEXStyle("#d97642")
+	warnPre  = color.HEXStyle("#d97642", "#33190b")
+	fatal    = color.HEXStyle("#ed002b")
 	fatalPre = color.HEXStyle("#ed002b", "#240007")
 )
 
